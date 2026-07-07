@@ -1,31 +1,28 @@
+"""
+Portfolio model — holds user portfolio state, holdings, and trade history.
+Column names are consistent with what the router uses.
+"""
 from sqlalchemy import Column, Integer, Float, String, Boolean, ForeignKey, Text, DateTime
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import relationship
-from app.models.base import Base, BaseModel
-import enum
-
-
-class OrderTypeEnum(str, enum.Enum):
-    BUY = "buy"
-    SELL = "sell"
+from datetime import datetime
+from app.models.base import BaseModel
 
 
 class Portfolio(BaseModel):
     __tablename__ = "portfolio"
 
     id = Column(Integer, primary_key=True, index=True)
-    user_id = Column(Integer, ForeignKey("user.id", ondelete="CASCADE"))
+    user_id = Column(Integer, ForeignKey("user.id", ondelete="CASCADE"), unique=True)
     name = Column(String(100), default="Main Portfolio")
-    total_value = Column(Float, default=10000.00)
-    cash_available = Column(Float, default=10000.00)
-    initial_capital = Column(Float, default=10000.00)
+    cash = Column(Float, default=10000.00, nullable=False)
+    initial_capital = Column(Float, default=10000.00, nullable=False)
     currency = Column(String(3), default="USD")
     is_default = Column(Boolean, default=True)
-    strategy_notes = Column(Text)
 
     user = relationship("User", back_populates="portfolio")
     holdings = relationship("Holding", back_populates="portfolio", cascade="all, delete-orphan")
-    trades = relationship("Trade", back_populates="portfolio", cascade="all, delete-orphan")
+    trades = relationship("Trade", back_populates="portfolio", cascade="all, delete-orphan", order_by="Trade.executed_at.desc()")
 
 
 class Holding(BaseModel):
@@ -33,16 +30,29 @@ class Holding(BaseModel):
 
     id = Column(Integer, primary_key=True, index=True)
     portfolio_id = Column(Integer, ForeignKey("portfolio.id", ondelete="CASCADE"))
-    company_id = Column(Integer, ForeignKey("company.id"))
-    quantity = Column(Float, nullable=False)
-    average_buy_price = Column(Float, nullable=False)
+    symbol = Column(String(10), nullable=False)
+    company_name = Column(String(255))
+    shares = Column(Float, nullable=False)
+    avg_buy_price = Column(Float, nullable=False)
     current_price = Column(Float)
-    unrealized_pnl = Column(Float)
-    unrealized_pnl_pct = Column(Float)
-    weight_pct = Column(Float)
 
     portfolio = relationship("Portfolio", back_populates="holdings")
-    company = relationship("Company", back_populates="holdings")
+
+    @property
+    def market_value(self):
+        return self.shares * (self.current_price or self.avg_buy_price)
+
+    @property
+    def unrealized_pnl(self):
+        if not self.current_price:
+            return 0.0
+        return (self.current_price - self.avg_buy_price) * self.shares
+
+    @property
+    def unrealized_pnl_pct(self):
+        if not self.current_price or self.avg_buy_price == 0:
+            return 0.0
+        return ((self.current_price - self.avg_buy_price) / self.avg_buy_price) * 100
 
 
 class Trade(BaseModel):
@@ -50,22 +60,17 @@ class Trade(BaseModel):
 
     id = Column(Integer, primary_key=True, index=True)
     portfolio_id = Column(Integer, ForeignKey("portfolio.id", ondelete="CASCADE"))
-    company_id = Column(Integer, ForeignKey("company.id"))
-    order_type = Column(String(10), nullable=False)
-    order_method = Column(String(20), default="market")
-    quantity = Column(Float, nullable=False)
-    price_executed = Column(Float, nullable=False)
-    total_value = Column(Float, nullable=False)
-    limit_price = Column(Float)
-    stop_price = Column(Float)
-    commission = Column(Float, default=0)
-    reasoning = Column(Text)
-    risk_flags_at_trade = Column(JSONB)
-    portfolio_snapshot = Column(JSONB)
-    status = Column(String(20), default="executed")
+    symbol = Column(String(10), nullable=False)
+    company_name = Column(String(255))
+    side = Column(String(4), nullable=False)  # 'buy' or 'sell'
+    order_type = Column(String(20), default="market")
+    shares = Column(Float, nullable=False)
+    price = Column(Float, nullable=False)
+    total_amount = Column(Float, nullable=False)
+    status = Column(String(20), default="filled")
+    executed_at = Column(DateTime(timezone=True), default=datetime.utcnow)
 
     portfolio = relationship("Portfolio", back_populates="trades")
-    company = relationship("Company")
 
 
 class Watchlist(BaseModel):
@@ -74,11 +79,8 @@ class Watchlist(BaseModel):
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey("user.id", ondelete="CASCADE"))
     name = Column(String(100), nullable=False, default="My Watchlist")
-    description = Column(Text)
-    is_default = Column(Boolean, default=False)
-    sort_order = Column(Integer, default=0)
+    is_default = Column(Boolean, default=True)
 
-    user = relationship("User", backref="watchlists")
     items = relationship("WatchlistItem", back_populates="watchlist", cascade="all, delete-orphan")
 
 
@@ -87,11 +89,8 @@ class WatchlistItem(BaseModel):
 
     id = Column(Integer, primary_key=True, index=True)
     watchlist_id = Column(Integer, ForeignKey("watchlist.id", ondelete="CASCADE"))
-    company_id = Column(Integer, ForeignKey("company.id", ondelete="CASCADE"))
-    notes = Column(Text)
-    target_price = Column(Float)
-    alert_above = Column(Float)
-    alert_below = Column(Float)
+    symbol = Column(String(10), nullable=False)
+    company_name = Column(String(255))
+    added_at = Column(DateTime(timezone=True), default=datetime.utcnow)
 
     watchlist = relationship("Watchlist", back_populates="items")
-    company = relationship("Company")

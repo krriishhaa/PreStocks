@@ -13,35 +13,38 @@ export function useAuth() {
     setIsLoading(true);
     try {
       const response = await api.post('/auth/login', { email, password });
-      const { access_token, refresh_token } = response.data;
+      const { access_token, refresh_token, user: userData } = response.data;
       localStorage.setItem('ps_token', access_token);
       localStorage.setItem('ps_refresh_token', refresh_token);
-      const userResponse = await api.get('/users/me');
-      dispatch(setUser(userResponse.data));
+      if (userData) {
+        dispatch(setUser(userData));
+      }
       return response.data;
     } finally {
       setIsLoading(false);
     }
   };
 
-  const signup = async (data: { email: string; password: string; full_name?: string }) => {
-    setIsLoading(true);
+  const fetchMe = async () => {
     try {
-      const response = await api.post('/auth/register', data);
-      const { access_token, refresh_token } = response.data;
-      localStorage.setItem('ps_token', access_token);
-      localStorage.setItem('ps_refresh_token', refresh_token);
+      const response = await api.get('/auth/me');
+      dispatch(setUser(response.data));
       return response.data;
-    } finally {
-      setIsLoading(false);
+    } catch {
+      return null;
     }
   };
 
-  const logout = () => {
+  const logout = async () => {
+    try {
+      await api.post('/auth/logout');
+    } catch {
+      // Ignore errors on logout
+    }
     localStorage.removeItem('ps_token');
     localStorage.removeItem('ps_refresh_token');
     dispatch(logoutAction());
   };
 
-  return { user, isAuthenticated, isLoading, loading, error, login, signup, logout };
+  return { user, isAuthenticated, isLoading, loading, error, login, fetchMe, logout };
 }

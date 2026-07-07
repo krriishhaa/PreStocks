@@ -36,7 +36,7 @@ class PasswordResetRequest(BaseModel):
 
 
 class RiskAssessmentRequest(BaseModel):
-    answers: List[dict] = Field(..., min_length=5, max_length=10)
+    answers: list = Field(..., min_length=1, max_length=10)
 
 
 class UserResponse(BaseModel):

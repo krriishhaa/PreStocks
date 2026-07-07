@@ -1,7 +1,8 @@
 """
-Portfolio Router — full portfolio management, trades, risk summary, performance.
+Portfolio Router — portfolio state, trade execution, transaction history.
 """
 from fastapi import APIRouter, Depends, Query, HTTPException
+from pydantic import BaseModel as PydanticModel, Field
 from sqlalchemy.orm import Session
 from typing import Optional
 from datetime import datetime
@@ -13,126 +14,161 @@ from app.models.portfolio import Portfolio, Holding, Trade
 router = APIRouter()
 
 
-@router.get("")
-def get_portfolio(user_id: int = Depends(get_current_user_id), db: Session = Depends(get_db)):
-    portfolio = db.query(Portfolio).filter(Portfolio.user_id == user_id, Portfolio.is_default == True).first()
+class TradeRequest(PydanticModel):
+    symbol: str = Field(..., min_length=1, max_length=10)
+    company_name: Optional[str] = None
+    side: str = Field(..., pattern="^(buy|sell)$")
+    shares: float = Field(..., gt=0)
+    price: float = Field(..., gt=0)
+    order_type: str = "market"
+
+
+def _get_or_create_portfolio(user_id: int, db: Session) -> Portfolio:
+    portfolio = db.query(Portfolio).filter(Portfolio.user_id == user_id).first()
     if not portfolio:
-        portfolio = Portfolio(user_id=user_id, name="My Portfolio", initial_capital=10000.00, cash=10000.00)
+        portfolio = Portfolio(user_id=user_id, name="Main Portfolio", cash=10000.00, initial_capital=10000.00)
         db.add(portfolio)
         db.commit()
         db.refresh(portfolio)
+    return portfolio
 
+
+@router.get("")
+def get_portfolio(user_id: int = Depends(get_current_user_id), db: Session = Depends(get_db)):
+    portfolio = _get_or_create_portfolio(user_id, db)
     holdings = db.query(Holding).filter(Holding.portfolio_id == portfolio.id).all()
+
     total_invested = sum(h.shares * h.avg_buy_price for h in holdings)
-    total_current = sum(h.shares * (h.current_price or h.avg_buy_price) for h in holdings)
+    total_market = sum(h.market_value for h in holdings)
 
     return {
         "id": portfolio.id,
         "name": portfolio.name,
-        "cash": float(portfolio.cash),
-        "initial_capital": float(portfolio.initial_capital),
-        "total_value": float(portfolio.cash) + total_current,
-        "total_invested": total_invested,
-        "unrealized_pnl": total_current - total_invested,
-        "holdings_count": len(holdings),
+        "cash": round(portfolio.cash, 2),
+        "initial_capital": portfolio.initial_capital,
+        "total_value": round(portfolio.cash + total_market, 2),
+        "total_invested": round(total_invested, 2),
+        "unrealized_pnl": round(total_market - total_invested, 2),
+        "positions": len(holdings),
         "holdings": [
             {
-                "id": h.id, "company_id": h.company_id,
-                "shares": float(h.shares), "avg_buy_price": float(h.avg_buy_price),
-                "current_price": float(h.current_price) if h.current_price else None,
-                "unrealized_pnl": float(h.unrealized_pnl) if h.unrealized_pnl else None,
-                "unrealized_pnl_pct": float(h.unrealized_pnl_pct) if h.unrealized_pnl_pct else None,
-                "weight_pct": float(h.weight_pct) if h.weight_pct else None,
+                "id": h.id,
+                "symbol": h.symbol,
+                "company_name": h.company_name,
+                "shares": h.shares,
+                "avg_buy_price": h.avg_buy_price,
+                "current_price": h.current_price,
+                "market_value": round(h.market_value, 2),
+                "unrealized_pnl": round(h.unrealized_pnl, 2),
+                "unrealized_pnl_pct": round(h.unrealized_pnl_pct, 2),
             }
             for h in holdings
         ],
-        "created_at": portfolio.created_at
     }
 
 
 @router.get("/summary")
 def get_portfolio_summary(user_id: int = Depends(get_current_user_id), db: Session = Depends(get_db)):
-    portfolio = db.query(Portfolio).filter(Portfolio.user_id == user_id, Portfolio.is_default == True).first()
-    if not portfolio:
-        return {"total_value": 10000.00, "cash": 10000.00, "pnl": 0, "pnl_pct": 0, "positions": 0}
-
+    portfolio = _get_or_create_portfolio(user_id, db)
     holdings = db.query(Holding).filter(Holding.portfolio_id == portfolio.id).all()
-    total_current = sum(h.shares * (h.current_price or h.avg_buy_price) for h in holdings)
-    total_value = float(portfolio.cash) + total_current
-    pnl = total_value - float(portfolio.initial_capital)
-    pnl_pct = (pnl / float(portfolio.initial_capital)) * 100 if portfolio.initial_capital else 0
+
+    total_market = sum(h.market_value for h in holdings)
+    total_value = portfolio.cash + total_market
+    pnl = total_value - portfolio.initial_capital
+    pnl_pct = (pnl / portfolio.initial_capital * 100) if portfolio.initial_capital else 0
 
     return {
-        "total_value": total_value,
-        "cash": float(portfolio.cash),
-        "invested": total_current,
-        "pnl": pnl,
+        "total_value": round(total_value, 2),
+        "cash": round(portfolio.cash, 2),
+        "invested": round(total_market, 2),
+        "pnl": round(pnl, 2),
         "pnl_pct": round(pnl_pct, 2),
         "positions": len(holdings),
-        "initial_capital": float(portfolio.initial_capital)
+        "initial_capital": portfolio.initial_capital,
     }
 
 
 @router.post("/trades", status_code=201)
 def place_trade(
-    company_id: int,
-    side: str,
-    shares: float,
-    price: float,
-    order_type: str = "market",
+    trade_req: TradeRequest,
     user_id: int = Depends(get_current_user_id),
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
 ):
-    portfolio = db.query(Portfolio).filter(Portfolio.user_id == user_id, Portfolio.is_default == True).first()
-    if not portfolio:
-        raise HTTPException(status_code=404, detail="Portfolio not found")
+    portfolio = _get_or_create_portfolio(user_id, db)
+    total_amount = trade_req.shares * trade_req.price
 
-    total_amount = shares * price
+    if trade_req.side == "buy":
+        if portfolio.cash < total_amount:
+            raise HTTPException(status_code=400, detail=f"Insufficient cash. Available: ${portfolio.cash:.2f}, Required: ${total_amount:.2f}")
 
-    if side == "buy":
-        if float(portfolio.cash) < total_amount:
-            raise HTTPException(status_code=400, detail="Insufficient cash")
-        portfolio.cash = float(portfolio.cash) - total_amount
+        portfolio.cash -= total_amount
 
         existing = db.query(Holding).filter(
-            Holding.portfolio_id == portfolio.id, Holding.company_id == company_id
+            Holding.portfolio_id == portfolio.id,
+            Holding.symbol == trade_req.symbol.upper(),
         ).first()
+
         if existing:
-            total_shares = float(existing.shares) + shares
+            new_total_shares = existing.shares + trade_req.shares
             existing.avg_buy_price = (
-                (float(existing.shares) * float(existing.avg_buy_price)) + (shares * price)
-            ) / total_shares
-            existing.shares = total_shares
+                (existing.shares * existing.avg_buy_price) + (trade_req.shares * trade_req.price)
+            ) / new_total_shares
+            existing.shares = new_total_shares
+            existing.current_price = trade_req.price
         else:
             holding = Holding(
-                portfolio_id=portfolio.id, company_id=company_id,
-                shares=shares, avg_buy_price=price, current_price=price
+                portfolio_id=portfolio.id,
+                symbol=trade_req.symbol.upper(),
+                company_name=trade_req.company_name,
+                shares=trade_req.shares,
+                avg_buy_price=trade_req.price,
+                current_price=trade_req.price,
             )
             db.add(holding)
 
-    elif side == "sell":
+    elif trade_req.side == "sell":
         existing = db.query(Holding).filter(
-            Holding.portfolio_id == portfolio.id, Holding.company_id == company_id
+            Holding.portfolio_id == portfolio.id,
+            Holding.symbol == trade_req.symbol.upper(),
         ).first()
-        if not existing or float(existing.shares) < shares:
-            raise HTTPException(status_code=400, detail="Insufficient shares")
-        existing.shares = float(existing.shares) - shares
-        portfolio.cash = float(portfolio.cash) + total_amount
-        if float(existing.shares) <= 0:
+
+        if not existing or existing.shares < trade_req.shares:
+            available = existing.shares if existing else 0
+            raise HTTPException(status_code=400, detail=f"Insufficient shares. You own {available} shares of {trade_req.symbol.upper()}")
+
+        existing.shares -= trade_req.shares
+        portfolio.cash += total_amount
+
+        if existing.shares <= 0:
             db.delete(existing)
-    else:
-        raise HTTPException(status_code=400, detail="Invalid side. Use 'buy' or 'sell'.")
 
     trade = Trade(
-        portfolio_id=portfolio.id, company_id=company_id, order_type=order_type,
-        side=side, status="filled", shares=shares, price=price, total_amount=total_amount,
-        executed_at=datetime.utcnow()
+        portfolio_id=portfolio.id,
+        symbol=trade_req.symbol.upper(),
+        company_name=trade_req.company_name,
+        side=trade_req.side,
+        order_type=trade_req.order_type,
+        shares=trade_req.shares,
+        price=trade_req.price,
+        total_amount=total_amount,
+        status="filled",
+        executed_at=datetime.utcnow(),
     )
     db.add(trade)
     db.commit()
     db.refresh(trade)
 
-    return {"id": trade.id, "message": f"Trade executed: {side} {shares} shares @ ${price:.2f}", "total": total_amount}
+    return {
+        "id": trade.id,
+        "symbol": trade.symbol,
+        "side": trade.side,
+        "shares": trade.shares,
+        "price": trade.price,
+        "total_amount": trade.total_amount,
+        "status": trade.status,
+        "executed_at": trade.executed_at.isoformat(),
+        "cash_remaining": round(portfolio.cash, 2),
+    }
 
 
 @router.get("/trades")
@@ -140,21 +176,33 @@ def get_trade_history(
     limit: int = Query(default=50, le=200),
     offset: int = 0,
     user_id: int = Depends(get_current_user_id),
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
 ):
-    portfolio = db.query(Portfolio).filter(Portfolio.user_id == user_id, Portfolio.is_default == True).first()
+    portfolio = db.query(Portfolio).filter(Portfolio.user_id == user_id).first()
     if not portfolio:
         return []
+
     trades = (
-        db.query(Trade).filter(Trade.portfolio_id == portfolio.id)
+        db.query(Trade)
+        .filter(Trade.portfolio_id == portfolio.id)
         .order_by(Trade.executed_at.desc())
-        .offset(offset).limit(limit).all()
+        .offset(offset)
+        .limit(limit)
+        .all()
     )
+
     return [
         {
-            "id": t.id, "company_id": t.company_id, "side": t.side, "order_type": t.order_type,
-            "shares": float(t.shares), "price": float(t.price), "total_amount": float(t.total_amount),
-            "status": t.status, "executed_at": t.executed_at
+            "id": t.id,
+            "symbol": t.symbol,
+            "company_name": t.company_name,
+            "side": t.side,
+            "order_type": t.order_type,
+            "shares": t.shares,
+            "price": t.price,
+            "total_amount": t.total_amount,
+            "status": t.status,
+            "executed_at": t.executed_at.isoformat() if t.executed_at else None,
         }
         for t in trades
     ]
@@ -162,21 +210,20 @@ def get_trade_history(
 
 @router.get("/risk-summary")
 def get_portfolio_risk(user_id: int = Depends(get_current_user_id), db: Session = Depends(get_db)):
-    portfolio = db.query(Portfolio).filter(Portfolio.user_id == user_id, Portfolio.is_default == True).first()
+    portfolio = db.query(Portfolio).filter(Portfolio.user_id == user_id).first()
     if not portfolio:
-        return {"concentration_risk": "none", "top_holding_pct": 0, "diversification_score": 100}
+        return {"concentration_risk": "none", "top_holding_pct": 0, "diversification_score": 100, "positions": 0}
 
     holdings = db.query(Holding).filter(Holding.portfolio_id == portfolio.id).all()
     if not holdings:
-        return {"concentration_risk": "none", "top_holding_pct": 0, "diversification_score": 100}
+        return {"concentration_risk": "none", "top_holding_pct": 0, "diversification_score": 100, "positions": 0}
 
-    total = sum(float(h.shares) * float(h.current_price or h.avg_buy_price) for h in holdings)
-    weights = sorted(
-        [(float(h.shares) * float(h.current_price or h.avg_buy_price)) / total * 100 for h in holdings],
-        reverse=True
-    )
+    total = sum(h.market_value for h in holdings)
+    if total == 0:
+        return {"concentration_risk": "none", "top_holding_pct": 0, "diversification_score": 100, "positions": len(holdings)}
 
-    top_pct = weights[0] if weights else 0
+    weights = sorted([(h.market_value / total * 100) for h in holdings], reverse=True)
+    top_pct = weights[0]
     hhi = sum(w ** 2 for w in weights)
     diversification = max(0, min(100, 100 - (hhi / 100)))
 
@@ -192,5 +239,4 @@ def get_portfolio_risk(user_id: int = Depends(get_current_user_id), db: Session 
         "top_holding_pct": round(top_pct, 1),
         "diversification_score": round(diversification, 1),
         "positions": len(holdings),
-        "hhi_index": round(hhi, 1)
     }

@@ -1,19 +1,21 @@
 """Alembic environment configuration."""
+import os
 from logging.config import fileConfig
 
-from sqlalchemy import engine_from_config
-from sqlalchemy import pool
+from sqlalchemy import engine_from_config, pool
 from alembic import context
 
 from app.models.base import Base
-from app.models.user import User, UserRiskProfile
-from app.models.portfolio import Portfolio, Holding, Trade
-from app.models.stock import Stock, StockFundamentals
-from app.models.flags import RiskFlag
+from app.models.user import User, UserRiskProfile, UserSession
+from app.models.portfolio import Portfolio, Holding, Trade, Watchlist, WatchlistItem
 from app.models.learning import LearningModule, UserModuleProgress
-from app.models.social import SocialPost, SocialComment, SocialLike
 
 config = context.config
+
+# Override URL from environment if set
+db_url = os.getenv("DATABASE_URL")
+if db_url:
+    config.set_main_option("sqlalchemy.url", db_url)
 
 target_metadata = Base.metadata
 

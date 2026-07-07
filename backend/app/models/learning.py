@@ -1,21 +1,25 @@
-from sqlalchemy import Column, Integer, String, JSON, ForeignKey, DateTime
+"""
+Learning model — modules and user progress tracking.
+"""
+from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Text
+from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import relationship
-from app.models.base import Base, BaseModel
+from app.models.base import BaseModel
 
 
 class LearningModule(BaseModel):
     __tablename__ = "learning_module"
 
     id = Column(Integer, primary_key=True, index=True)
+    slug = Column(String(100), unique=True, nullable=False)
     title = Column(String(255), nullable=False)
-    description = Column(String(500))
-    required_tier = Column(String(50))  # 'beginner', 'intermediate', 'advanced'
-    content_url = Column(String(500))  # Link to video or interactive content
-    estimated_duration_minutes = Column(Integer)
-    quiz_questions = Column(JSON)  # Array of question objects
-    order = Column(Integer)  # Order in tier progression
+    description = Column(Text)
+    tier = Column(String(50), nullable=False)  # 'beginner', 'intermediate', 'advanced'
+    duration_minutes = Column(Integer, default=5)
+    order_index = Column(Integer, default=0)
+    content_url = Column(String(500), nullable=True)
+    quiz_questions = Column(JSONB, nullable=True)
 
-    # Relationships
     user_progress = relationship("UserModuleProgress", back_populates="module")
 
 
@@ -24,11 +28,12 @@ class UserModuleProgress(BaseModel):
 
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey("user.id", ondelete="CASCADE"))
-    module_id = Column(Integer, ForeignKey("learning_module.id"))
-    started_at = Column(DateTime(timezone=True))
-    completed_at = Column(DateTime(timezone=True))
-    quiz_score = Column(Integer)  # 0-100, NULL if not completed
+    module_id = Column(Integer, ForeignKey("learning_module.id", ondelete="CASCADE"))
+    status = Column(String(20), default="not_started")  # not_started, in_progress, completed
+    progress_pct = Column(Integer, default=0)
+    quiz_score = Column(Integer, nullable=True)
+    started_at = Column(DateTime(timezone=True), nullable=True)
+    completed_at = Column(DateTime(timezone=True), nullable=True)
 
-    # Relationships
     user = relationship("User", back_populates="module_progress")
     module = relationship("LearningModule", back_populates="user_progress")
