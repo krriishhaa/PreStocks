@@ -126,3 +126,82 @@ def list_conversations(
         .limit(limit)
         .all()
     )
+
+
+# ─── News Summarization ───
+
+@router.get("/news/summarize/{article_id}")
+def summarize_article(article_id: int, db: Session = Depends(get_db)):
+    from app.services.ai_news_summarizer import AINewsSummarizer
+    summarizer = AINewsSummarizer(db)
+    return summarizer.summarize_article(article_id)
+
+
+@router.get("/news/summarize/company/{company_id}")
+def summarize_company_news(
+    company_id: int,
+    limit: int = 10,
+    db: Session = Depends(get_db)
+):
+    from app.services.ai_news_summarizer import AINewsSummarizer
+    summarizer = AINewsSummarizer(db)
+    return summarizer.summarize_for_company(company_id, limit)
+
+
+@router.get("/news/digest")
+def get_market_digest(
+    hours: int = 24,
+    limit: int = 15,
+    db: Session = Depends(get_db)
+):
+    """Get AI-generated market news digest with sentiment and impact analysis."""
+    from app.services.ai_news_summarizer import AINewsSummarizer
+    summarizer = AINewsSummarizer(db)
+    return summarizer.get_market_digest(hours, limit)
+
+
+# ─── Recommendation Engine ───
+
+@router.get("/recommendations")
+def get_recommendations(
+    user_id: int = Depends(get_current_user_id),
+    db: Session = Depends(get_db)
+):
+    """Get full personalized recommendations: companies, sectors, watchlists."""
+    from app.services.recommendation_engine import RecommendationEngine
+    engine = RecommendationEngine(db)
+    return engine.get_recommendations(user_id)
+
+
+@router.get("/recommendations/companies")
+def get_company_recommendations(
+    limit: int = 10,
+    user_id: int = Depends(get_current_user_id),
+    db: Session = Depends(get_db)
+):
+    """Get personalized company recommendations."""
+    from app.services.recommendation_engine import RecommendationEngine
+    engine = RecommendationEngine(db)
+    return engine.recommend_companies(user_id, limit)
+
+
+@router.get("/recommendations/sectors")
+def get_sector_recommendations(
+    user_id: int = Depends(get_current_user_id),
+    db: Session = Depends(get_db)
+):
+    """Get sector diversification recommendations."""
+    from app.services.recommendation_engine import RecommendationEngine
+    engine = RecommendationEngine(db)
+    return engine.recommend_sectors(user_id)
+
+
+@router.get("/recommendations/watchlists")
+def get_watchlist_recommendations(
+    user_id: int = Depends(get_current_user_id),
+    db: Session = Depends(get_db)
+):
+    """Get curated watchlist suggestions based on user tier."""
+    from app.services.recommendation_engine import RecommendationEngine
+    engine = RecommendationEngine(db)
+    return engine.recommend_watchlists(user_id)
