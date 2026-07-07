@@ -5,9 +5,9 @@ import { cn } from "@/components/ui/utils";
  * Skeleton loading component — subtle fade animation, no spinners.
  * Per §6.6: "gray placeholder boxes with fade in/out at 1-second interval"
  */
-export function Skeleton({ className }: { className?: string }) {
+export function Skeleton({ className, style }: { className?: string; style?: React.CSSProperties }) {
   return (
-    <div className={cn("animate-pulse bg-[#E5E7EB] rounded-[6px]", className)} />
+    <div className={cn("animate-pulse bg-[#E5E7EB] rounded-[6px]", className)} style={style} />
   );
 }
 

@@ -100,7 +100,7 @@ export function SignupForm() {
   };
 
   const handleStep3 = () => {
-    signup("User", "user@example.com", "password123");
+    signup({ email: "user@example.com", password: "password123", full_name: "User" });
   };
 
   const toggleSector = (s: string) => {

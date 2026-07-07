@@ -2,37 +2,55 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Import Inter font */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@layer base {
+  * {
+    @apply box-border;
+  }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-white text-neutral-900 font-sans;
+  }
+
+  button {
+    font-family: inherit;
+  }
+
+  input, textarea, select {
+    font-family: inherit;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
 }
 
-html {
-  scroll-behavior: smooth;
+@layer components {
+  .page-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .card {
+    @apply bg-white border border-neutral-200 rounded-lg shadow-sm;
+  }
+
+  .section-title {
+    @apply text-xl font-semibold text-neutral-900;
+  }
+
+  .skeleton {
+    @apply bg-neutral-100 rounded animate-pulse;
+  }
 }
 
-body {
-  background-color: #FFFFFF;
-  color: #1F2937;
-  font-family: 'Inter', sans-serif;
-}
-
-/* Remove default button styles */
-button {
-  font-family: inherit;
-  border: none;
-  cursor: pointer;
-}
-
-input, textarea, select {
-  font-family: inherit;
-}
-
-a {
-  text-decoration: none;
-  color: inherit;
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
 }

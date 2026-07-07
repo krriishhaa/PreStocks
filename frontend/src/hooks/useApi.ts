@@ -1,11 +1,11 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import apiClient from '@/utils/api';
+import { api } from '@/utils/api';
 
 export function useApi<T>(key: string[], url: string, options?: { enabled?: boolean }) {
   return useQuery<T>({
     queryKey: key,
     queryFn: async () => {
-      const response = await apiClient.get(url);
+      const response = await api.get(url);
       return response.data;
     },
     enabled: options?.enabled,
@@ -17,7 +17,7 @@ export function useApiMutation<TData, TVariables>(url: string, method: 'post' | 
 
   return useMutation<TData, Error, TVariables>({
     mutationFn: async (variables) => {
-      const response = await apiClient[method](url, variables);
+      const response = await api[method](url, variables as any);
       return response.data;
     },
     onSuccess: () => {

@@ -1,103 +1,54 @@
-import { useCallback } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/store";
-import {
-  addHolding,
-  removeHolding,
-  addTransaction,
-  setCash,
-  recalculateTotals,
-} from "@/store/slices/portfolioSlice";
-import { calculateCostBasis } from "@/utils/calculations";
+import { setPortfolio, setHoldings, addTransaction, setLoading, setError } from "@/store/slices/portfolioSlice";
+import { api } from "@/utils/api";
 import type { Holding, Transaction } from "@/types/portfolio";
 
 export function usePortfolio() {
   const dispatch = useAppDispatch();
-  const { portfolio, isLoading, error } = useAppSelector(
-    (state) => state.portfolio
-  );
+  const { portfolio, holdings, loading, error } = useAppSelector((state) => state.portfolio);
 
-  const buyStock = useCallback(
-    (symbol: string, name: string, shares: number, price: number) => {
-      const total = shares * price;
-      if (total > portfolio.cashBalance) {
-        throw new Error("Insufficient funds");
-      }
+  const fetchPortfolio = async () => {
+    dispatch(setLoading(true));
+    try {
+      const { data } = await api.get("/portfolio/summary");
+      dispatch(setPortfolio(data));
+    } catch (err: any) {
+      dispatch(setError(err.message));
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
 
-      const existing = portfolio.holdings.find((h) => h.symbol === symbol);
-      const newAvg = existing
-        ? calculateCostBasis(existing.shares, existing.avgCost, shares, price)
-        : price;
+  const executeTrade = async (trade: { company_id: number; action: string; quantity: number; price: number }) => {
+    try {
+      const { data } = await api.post("/portfolio/trade", trade);
+      dispatch(addTransaction(data));
+      await fetchPortfolio();
+      return data;
+    } catch (err: any) {
+      dispatch(setError(err.message));
+      throw err;
+    }
+  };
 
-      const holding: Holding = {
-        symbol,
-        name,
-        shares,
-        avgCost: newAvg,
-        currentPrice: price,
-        totalValue: shares * price,
-        totalReturn: 0,
-        totalReturnPercent: 0,
-        dayChange: 0,
-        dayChangePercent: 0,
-      };
+  const buyStock = async (symbol: string, nameOrShares: string | number, sharesOrPrice?: number, priceArg?: number) => {
+    const shares = typeof nameOrShares === 'number' ? nameOrShares : sharesOrPrice!;
+    const price = typeof nameOrShares === 'number' ? sharesOrPrice! : priceArg!;
+    return executeTrade({ company_id: 0, action: "buy", quantity: shares, price });
+  };
 
-      dispatch(addHolding(holding));
-      dispatch(setCash(portfolio.cashBalance - total));
+  const sellStock = async (symbol: string, shares: number, price: number) => {
+    return executeTrade({ company_id: 0, action: "sell", quantity: shares, price });
+  };
 
-      const tx: Transaction = {
-        id: `tx-${Date.now()}`,
-        symbol,
-        action: "buy",
-        shares,
-        price,
-        total,
-        timestamp: new Date().toISOString(),
-        status: "filled",
-      };
-      dispatch(addTransaction(tx));
-      dispatch(recalculateTotals());
-    },
-    [dispatch, portfolio]
-  );
-
-  const sellStock = useCallback(
-    (symbol: string, shares: number, price: number) => {
-      const existing = portfolio.holdings.find((h) => h.symbol === symbol);
-      if (!existing || existing.shares < shares) {
-        throw new Error("Insufficient shares");
-      }
-
-      const total = shares * price;
-
-      if (existing.shares === shares) {
-        dispatch(removeHolding(symbol));
-      } else {
-        const updatedHolding: Holding = {
-          ...existing,
-          shares: existing.shares - shares,
-          totalValue: (existing.shares - shares) * price,
-        };
-        dispatch(removeHolding(symbol));
-        dispatch(addHolding(updatedHolding));
-      }
-
-      dispatch(setCash(portfolio.cashBalance + total));
-
-      const tx: Transaction = {
-        id: `tx-${Date.now()}`,
-        symbol,
-        action: "sell",
-        shares,
-        price,
-        total,
-        timestamp: new Date().toISOString(),
-        status: "filled",
-      };
-      dispatch(addTransaction(tx));
-      dispatch(recalculateTotals());
-    },
-    [dispatch, portfolio]
-  );
-
-  return { portfolio, isLoading, error, buyStock, sellStock };
+  return {
+    portfolio,
+    holdings,
+    loading,
+    error,
+    fetchPortfolio,
+    executeTrade,
+    buyStock,
+    sellStock,
+  };
 }

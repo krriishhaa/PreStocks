@@ -7,6 +7,7 @@ import { formatCurrency, formatPercent } from "@/utils/formatting";
 
 const navLinks = [
   { href: "/app/dashboard", label: "Dashboard", icon: "📊" },
+  { href: "/app/markets", label: "Markets", icon: "🌐" },
   { href: "/app/portfolio", label: "Portfolio", icon: "💼" },
   { href: "/app/trade", label: "Trade", icon: "📈" },
   { href: "/app/learning", label: "Learn", icon: "🎓" },

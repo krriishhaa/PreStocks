@@ -18,7 +18,7 @@ export function useFlagData(symbol?: string) {
   const fetchFlags = useCallback(async () => {
     dispatch(setLoading(true));
     try {
-      const data = await api.get<RiskFlag[]>("/flags");
+      const { data } = await api.get<RiskFlag[]>("/flags");
       dispatch(setFlags(data));
     } catch (err: any) {
       dispatch(setError(err.message));
@@ -28,7 +28,7 @@ export function useFlagData(symbol?: string) {
   const fetchCompositeScore = useCallback(
     async (ticker: string) => {
       try {
-        const data = await api.get<CompositeRiskScore>(`/flags/${ticker}/composite`);
+        const { data } = await api.get<CompositeRiskScore>(`/flags/${ticker}/composite`);
         dispatch(setCompositeScore(data));
       } catch (err: any) {
         dispatch(setError(err.message));

@@ -20,3 +20,10 @@ export const RISK_FLAG_TYPES = [
   'liquidity',
   'social_hype',
 ] as const;
+
+export const RISK_LEVELS = {
+  low: { label: 'Low Risk', color: '#10B981', bg: 'rgba(16,185,129,0.1)' },
+  medium: { label: 'Medium Risk', color: '#F59E0B', bg: 'rgba(245,158,11,0.1)' },
+  high: { label: 'High Risk', color: '#EF4444', bg: 'rgba(239,68,68,0.1)' },
+  critical: { label: 'Critical', color: '#7C3AED', bg: 'rgba(124,58,237,0.1)' },
+} as const;
