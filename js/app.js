@@ -17,10 +17,20 @@ import {
 } from './components/academy.js';
 import { setupPredictor } from './components/predictor.js';
 
+// Landing / App Page Toggle
+window.showApp = function() {
+  document.getElementById('landing-page').style.display = 'none';
+  document.getElementById('app-page').style.display = 'flex';
+};
+window.showLanding = function() {
+  document.getElementById('landing-page').style.display = 'block';
+  document.getElementById('app-page').style.display = 'none';
+};
+
 // Application State
 const appState = {
   currentPrices: {},
-  priceHistories: {}, // Cache of histories: { NVDA: { "1D": [...], "1W": [...] } }
+  priceHistories: {},
   activeSymbol: "NVDA",
   activeTimeframe: "1W",
   isHoveringChart: false

@@ -3,117 +3,362 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PreStocks - Stock Learning, Virtual Investing & AI Market Prediction</title>
-  <!-- Google Fonts: Inter -->
+  <title>PreStocks — Learn to Invest Before You Invest</title>
+  <meta name="description" content="Paper trading platform with AI-powered risk flags. Practice investing with $10k simulated cash. Learn stocks, not gamble.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <!-- App Container -->
-  <div class="app-layout">
-    
-    <!-- Top Navigation Header -->
-    <header class="app-header">
-      <div class="header-logo" id="logo-btn">
-        <span class="logo-icon">🏹</span>
-        <span class="logo-text">Pre<span>Stocks</span></span>
-      </div>
-      
-      <nav class="header-nav">
-        <button class="nav-tab active" data-tab="dashboard-view" id="nav-dashboard">
-          <span class="nav-icon">📊</span> Dashboard
-        </button>
-        <button class="nav-tab" data-tab="learn-view" id="nav-learn">
-          <span class="nav-icon">🎓</span> Learn Academy
-        </button>
-        <button class="nav-tab" data-tab="predictor-view" id="nav-predictor">
-          <span class="nav-icon">🔮</span> AI Predictor
-        </button>
-        <button class="nav-tab" data-tab="markets-view" id="nav-markets">
-          <span class="nav-icon">🌍</span> Global Markets
-        </button>
-        <button class="nav-tab" data-tab="infra-view" id="nav-infra">
-          <span class="nav-icon">🛠️</span> Data Infra
-        </button>
-      </nav>
-      
-      <div class="header-portfolio-summary">
-        <div class="portfolio-metric">
-          <span class="metric-label">Net Worth</span>
-          <span class="metric-value positive" id="header-net-worth">$10,000.00</span>
+
+  <!-- ═══════════ HOMEPAGE (Landing) ═══════════ -->
+  <div id="landing-page" class="landing-page">
+
+    <!-- Landing Nav -->
+    <header class="landing-nav">
+      <div class="container flex items-center justify-between" style="height:64px">
+        <div class="header-logo">
+          <span class="logo-icon">P</span>
+          <span style="font-size:18px;font-weight:700;color:var(--color-primary)">PreStocks</span>
         </div>
-        <div class="portfolio-metric">
-          <span class="metric-label">Cash</span>
-          <span class="metric-value" id="header-cash">$10,000.00</span>
-        </div>
-        <div class="portfolio-metric">
-          <span class="metric-label">Daily Return</span>
-          <span class="metric-value positive" id="header-daily-return">+$0.00 (0.00%)</span>
+        <nav class="landing-nav-links">
+          <a href="#features">Features</a>
+          <a href="#how-it-works">How it works</a>
+          <a href="#testimonials">Testimonials</a>
+          <a href="#pricing">Pricing</a>
+        </nav>
+        <div class="flex gap-3 items-center">
+          <button class="btn btn-ghost btn-md" onclick="showApp()">Log in</button>
+          <button class="btn btn-primary btn-md" onclick="showApp()">Start Free</button>
         </div>
       </div>
     </header>
 
-    <!-- Main Workspace Area -->
-    <div class="app-body">
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="container">
+        <div class="hero-grid">
+          <div class="hero-content">
+            <div class="hero-badge">
+              <span class="badge badge-info">New</span>
+              <span style="font-size:13px;color:var(--text-secondary)">AI-powered risk explanations now live</span>
+            </div>
+            <h1 class="hero-title">Learn to invest<br><span class="hero-title-accent">before you invest.</span></h1>
+            <p class="hero-subtitle">Practice trading with $10,000 in simulated cash. Our AI flags risks before you trade — so you understand what you're buying, not just how to buy it.</p>
+            <div class="hero-cta">
+              <button class="btn btn-primary btn-xl" onclick="showApp()">Start Paper Trading — Free</button>
+              <button class="btn btn-secondary btn-lg">Watch Demo</button>
+            </div>
+            <div class="hero-trust">
+              <div class="trust-item">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 9l2 2 4-4"/><circle cx="8" cy="8" r="7"/></svg>
+                <span>No real money at risk</span>
+              </div>
+              <div class="trust-item">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 9l2 2 4-4"/><circle cx="8" cy="8" r="7"/></svg>
+                <span>No credit card required</span>
+              </div>
+              <div class="trust-item">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 9l2 2 4-4"/><circle cx="8" cy="8" r="7"/></svg>
+                <span>Risk flags on every stock</span>
+              </div>
+            </div>
+          </div>
+          <div class="hero-visual">
+            <div class="hero-mockup">
+              <div class="mockup-header">
+                <div class="mockup-dot"></div><div class="mockup-dot"></div><div class="mockup-dot"></div>
+              </div>
+              <div class="mockup-body">
+                <div class="mockup-stock-row">
+                  <div><strong>NVDA</strong><br><span style="font-size:12px;color:var(--text-tertiary)">NVIDIA Corp</span></div>
+                  <div style="text-align:right"><strong>$131.28</strong><br><span class="price-up" style="font-size:12px">+3.42%</span></div>
+                </div>
+                <div class="mockup-chart-area"></div>
+                <div class="mockup-risk-flag">
+                  <div class="risk-flag-indicator high"></div>
+                  <div>
+                    <div style="font-size:12px;font-weight:600">High Volatility Flag</div>
+                    <div style="font-size:11px;color:var(--text-secondary)">Moves 2.3x more than sector median</div>
+                  </div>
+                  <button class="btn btn-sm btn-ghost" style="font-size:11px;color:var(--color-primary)">Explain</button>
+                </div>
+                <div class="mockup-risk-flag">
+                  <div class="risk-flag-indicator medium"></div>
+                  <div>
+                    <div style="font-size:12px;font-weight:600">Valuation Flag</div>
+                    <div style="font-size:11px;color:var(--text-secondary)">P/E in 85th percentile of 5yr range</div>
+                  </div>
+                  <button class="btn btn-sm btn-ghost" style="font-size:11px;color:var(--color-primary)">Explain</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Social Proof Strip -->
+    <section class="social-proof-strip">
+      <div class="container">
+        <div class="proof-stats">
+          <div class="proof-stat"><span class="proof-number">12,400+</span><span class="proof-label">Paper traders</span></div>
+          <div class="proof-stat"><span class="proof-number">850K+</span><span class="proof-label">Simulated trades</span></div>
+          <div class="proof-stat"><span class="proof-number">94%</span><span class="proof-label">Say they feel more confident</span></div>
+          <div class="proof-stat"><span class="proof-number">4.8★</span><span class="proof-label">Average rating</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+      <div class="container">
+        <div class="section-intro">
+          <h2>Everything you need to invest with confidence</h2>
+          <p>Not another trading app. A learning platform that happens to let you trade.</p>
+        </div>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon" style="background:var(--color-danger-surface);color:var(--color-danger)">
+              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <h3>Pre-Trade Risk Flags</h3>
+            <p>8 risk indicators analyzed before every trade. Volatility, valuation, insider activity, and more — explained in plain English.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon" style="background:var(--color-primary-surface);color:var(--color-primary)">
+              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+            </div>
+            <h3>AI Explanations</h3>
+            <p>Click "Explain This" on any flag. Our LLM reads historical context and tells you what it means — in 2-3 sentences a beginner can understand.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon" style="background:var(--color-success-surface);color:var(--color-success)">
+              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+            </div>
+            <h3>Structured Learning</h3>
+            <p>13 modules from "What is a Stock?" to "Options Deep Dive". Must pass quizzes (80%) to unlock trading features. No shortcuts.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon" style="background:var(--color-warning-surface);color:var(--color-warning)">
+              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            </div>
+            <h3>Paper Trading</h3>
+            <p>$10,000 simulated cash. Buy, sell, track P&L — learn the mechanics of the market with zero financial risk.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon" style="background:var(--color-secondary-light);color:var(--color-secondary)">
+              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+            </div>
+            <h3>Reasoning-Based Social</h3>
+            <p>Share why you traded, not just what. No hype, no copy-trading — learn from others' thinking process.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon" style="background:var(--bg-tertiary);color:var(--text-secondary)">
+              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+            </div>
+            <h3>Zero Gamification</h3>
+            <p>No confetti. No streaks. No push notifications. No leaderboards. Just calm, deliberate learning at your own pace.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works" class="how-section">
+      <div class="container">
+        <div class="section-intro">
+          <h2>From zero knowledge to confident investing</h2>
+          <p>A structured path — not a firehose of information.</p>
+        </div>
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <h3>Take the Risk Assessment</h3>
+            <p>5 scenario-based questions determine your starting tier and personalize your learning path.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <h3>Complete Learning Modules</h3>
+            <p>Bite-sized lessons with quizzes. Pass 80% to unlock the next level and trading features.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <h3>Research with Risk Flags</h3>
+            <p>Browse stocks with AI-powered risk analysis. Understand what you're buying before clicking "Buy".</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">4</div>
+            <h3>Trade with Guardrails</h3>
+            <p>Paper trade with warnings, cooling-off prompts, and portfolio concentration alerts. Build good habits.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="testimonials" class="testimonials-section">
+      <div class="container">
+        <div class="section-intro">
+          <h2>Trusted by beginners who became confident investors</h2>
+        </div>
+        <div class="testimonials-grid">
+          <div class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <p>"I lost $2k on Robinhood before finding PreStocks. The risk flags would have saved me. Now I understand what P/E actually means before buying."</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">M</div>
+              <div><strong>Marcus T.</strong><br><span style="font-size:12px;color:var(--text-secondary)">Product Manager, Austin</span></div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <p>"Used it for my personal finance class. Students actually learn before they trade — the tier system means they can't skip fundamentals."</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">S</div>
+              <div><strong>Sarah K.</strong><br><span style="font-size:12px;color:var(--text-secondary)">HS Teacher, Denver</span></div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <p>"The 'Explain This' feature on risk flags is incredible. It's like having a patient finance professor available 24/7."</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">P</div>
+              <div><strong>Priya R.</strong><br><span style="font-size:12px;color:var(--text-secondary)">CS Student, Bangalore</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+      <div class="container">
+        <div class="cta-box">
+          <h2>Ready to learn investing the right way?</h2>
+          <p>Join 12,000+ learners who chose education over gambling. Free forever for paper trading.</p>
+          <button class="btn btn-primary btn-xl" onclick="showApp()">Create Free Account</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="landing-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <div class="header-logo" style="margin-bottom:12px">
+              <span class="logo-icon">P</span>
+              <span style="font-size:16px;font-weight:700;color:var(--text-primary)">PreStocks</span>
+            </div>
+            <p style="font-size:13px;color:var(--text-secondary);max-width:240px">Learn to invest before you invest. Paper trading with AI-powered risk education.</p>
+          </div>
+          <div class="footer-links">
+            <h4>Product</h4>
+            <a href="#">Features</a><a href="#">Pricing</a><a href="#">Learning Modules</a><a href="#">Risk Flags</a>
+          </div>
+          <div class="footer-links">
+            <h4>Company</h4>
+            <a href="#">About</a><a href="#">Blog</a><a href="#">Careers</a><a href="#">Contact</a>
+          </div>
+          <div class="footer-links">
+            <h4>Legal</h4>
+            <a href="#">Privacy</a><a href="#">Terms</a><a href="#">Disclaimer</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>© 2026 PreStocks. Not a broker-dealer. Paper trading only.</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ═══════════ APP (Dashboard + Views) ═══════════ -->
+  <div id="app-page" class="app-layout" style="display:none">
+
+    <!-- App Header -->
+    <header class="app-header">
+      <div class="header-logo" id="logo-btn">
+        <span class="logo-icon">P</span>
+        <span style="font-size:16px;font-weight:700;color:var(--color-primary)">PreStocks</span>
+      </div>
       
-      <!-- Main Content (Dynamic Views) -->
+      <nav class="header-nav">
+        <button class="nav-tab active" data-tab="dashboard-view">Dashboard</button>
+        <button class="nav-tab" data-tab="learn-view">Learn</button>
+        <button class="nav-tab" data-tab="predictor-view">AI Insights</button>
+        <button class="nav-tab" data-tab="markets-view">Markets</button>
+        <button class="nav-tab" data-tab="infra-view">Data Infra</button>
+      </nav>
+
+      <div class="header-actions">
+        <div class="search-bar" style="width:200px">
+          <svg class="search-bar-icon" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="7" cy="7" r="5"/><path d="M11 11l4 4"/></svg>
+          <input class="search-bar-input" placeholder="Search stocks..." type="text">
+        </div>
+      </div>
+
+      <div class="header-portfolio-summary">
+        <div class="portfolio-metric">
+          <span class="metric-label">Portfolio</span>
+          <span class="metric-value positive" id="header-net-worth">$10,342.50</span>
+        </div>
+        <div class="portfolio-metric">
+          <span class="metric-label">Today</span>
+          <span class="metric-value positive" id="header-daily-return">+$42.50</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- App Body -->
+    <div class="app-body">
       <main class="main-content">
-        
-        <!-- ================= DASHBOARD VIEW ================= -->
+
+        <!-- ═══ DASHBOARD VIEW ═══ -->
         <section id="dashboard-view" class="view-section active">
           <div class="dashboard-grid">
-            
-            <!-- Left Side: Interactive Chart & Details -->
             <div class="chart-details-container">
-              
-              <!-- Stock Header Info -->
+              <!-- Stock Header -->
               <div class="stock-header">
                 <div class="stock-title-area">
-                  <h1 class="stock-name-title" id="active-stock-name">Apple Inc.</h1>
+                  <h1 class="stock-name-title" id="active-stock-name">NVIDIA Corporation</h1>
                   <div class="stock-meta-row">
-                    <span class="stock-symbol-badge" id="active-stock-symbol">AAPL</span>
-                    <span class="stock-category-badge" id="active-stock-category">Technology</span>
+                    <span class="stock-symbol-badge" id="active-stock-symbol">NVDA</span>
+                    <span class="stock-category-badge" id="active-stock-category">Semiconductors</span>
                   </div>
                 </div>
                 <div class="stock-price-area">
-                  <div class="stock-current-price" id="active-stock-price">$175.50</div>
-                  <div class="stock-change-percent positive" id="active-stock-change">+$0.00 (0.00%)</div>
+                  <div class="stock-current-price" id="active-stock-price">$131.28</div>
+                  <div class="stock-change-percent price-up" id="active-stock-change">+$4.12 (+3.24%)</div>
                 </div>
               </div>
 
-              <!-- Interactive Chart Card -->
+              <!-- Chart -->
               <div class="chart-card">
-                <!-- SVG Chart viewport -->
                 <div class="svg-chart-wrapper" id="main-chart-wrapper">
-                  <div class="chart-tooltip-hover" id="chart-tooltip" style="display: none;">
+                  <div class="chart-tooltip-hover" id="chart-tooltip" style="display:none">
                     <div class="tooltip-date" id="tooltip-date">-</div>
                     <div class="tooltip-price" id="tooltip-price">-</div>
                   </div>
                   <svg id="main-stock-svg" width="100%" height="100%" viewBox="0 0 800 350" preserveAspectRatio="none">
                     <defs>
                       <linearGradient id="chart-glow-gradient" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stop-color="#00c805" stop-opacity="0.25" />
-                        <stop offset="100%" stop-color="#00c805" stop-opacity="0.0" />
+                        <stop offset="0%" stop-color="var(--color-success)" stop-opacity="0.2"/>
+                        <stop offset="100%" stop-color="var(--color-success)" stop-opacity="0.0"/>
                       </linearGradient>
                       <linearGradient id="chart-glow-gradient-red" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stop-color="#ff3b30" stop-opacity="0.25" />
-                        <stop offset="100%" stop-color="#ff3b30" stop-opacity="0.0" />
+                        <stop offset="0%" stop-color="var(--color-danger)" stop-opacity="0.2"/>
+                        <stop offset="100%" stop-color="var(--color-danger)" stop-opacity="0.0"/>
                       </linearGradient>
                     </defs>
-                    <!-- Grid Lines and Axes -->
                     <g id="chart-grid"></g>
-                    <!-- Shading Area under line -->
-                    <path id="chart-area-path" d="" fill="url(#chart-glow-gradient)" />
-                    <!-- The Main Price Line -->
-                    <path id="chart-line-path" d="" fill="none" stroke="#00c805" stroke-width="2.5" />
-                    <!-- Interactivity tracking line -->
-                    <line id="chart-interactive-line" x1="0" y1="0" x2="0" y2="350" stroke="#555" stroke-dasharray="4,4" style="display: none;" />
-                    <circle id="chart-interactive-dot" r="6" fill="#00c805" stroke="#090d0f" stroke-width="2" style="display: none;" />
+                    <path id="chart-area-path" d="" fill="url(#chart-glow-gradient)"/>
+                    <path id="chart-line-path" d="" fill="none" stroke="var(--color-success)" stroke-width="2"/>
+                    <line id="chart-interactive-line" x1="0" y1="0" x2="0" y2="350" stroke="var(--color-gray-300)" stroke-dasharray="4,4" style="display:none"/>
+                    <circle id="chart-interactive-dot" r="5" fill="var(--color-success)" stroke="white" stroke-width="2" style="display:none"/>
                   </svg>
                 </div>
-                <!-- Timeframe Selection -->
                 <div class="chart-timeframe-selectors">
                   <button class="timeframe-btn" data-timeframe="1D">1D</button>
                   <button class="timeframe-btn active" data-timeframe="1W">1W</button>
@@ -122,567 +367,198 @@
                 </div>
               </div>
 
-              <!-- Stock Profile details -->
-              <div class="card stock-profile-card">
+              <!-- Company Profile -->
+              <div class="stock-profile-card">
                 <h3>About Company</h3>
-                <p id="active-stock-description">Company description details loaded dynamically.</p>
-                
+                <p id="active-stock-description">NVIDIA designs and manufactures graphics processing units and system-on-chip units for gaming, professional visualization, data center, and automotive markets.</p>
                 <div class="sensitivity-meters">
-                  <h4>Global Macro Sensitivity Indices</h4>
+                  <h4>Macro Sensitivity</h4>
                   <div class="meters-grid">
                     <div class="meter-item">
-                      <span class="meter-label">Interest Rates Sensitivity</span>
-                      <div class="meter-bar-wrapper">
-                        <div class="meter-fill" id="sensitivity-rates" style="width: 50%;"></div>
-                      </div>
-                      <span class="meter-value-txt" id="sensitivity-rates-txt">Neutral</span>
+                      <span class="meter-label">Interest Rate Sensitivity</span>
+                      <div class="meter-bar-wrapper"><div class="meter-fill" id="sensitivity-rates" style="width:70%"></div></div>
+                      <span class="meter-value-txt" id="sensitivity-rates-txt">High</span>
                     </div>
                     <div class="meter-item">
-                      <span class="meter-label">Trade Tariffs Impact</span>
-                      <div class="meter-bar-wrapper">
-                        <div class="meter-fill" id="sensitivity-trade" style="width: 50%;"></div>
-                      </div>
-                      <span class="meter-value-txt" id="sensitivity-trade-txt">Neutral</span>
+                      <span class="meter-label">Trade Tariff Impact</span>
+                      <div class="meter-bar-wrapper"><div class="meter-fill" id="sensitivity-trade" style="width:85%"></div></div>
+                      <span class="meter-value-txt" id="sensitivity-trade-txt">Very High</span>
                     </div>
                     <div class="meter-item">
-                      <span class="meter-label">Consumer Spending Dependency</span>
-                      <div class="meter-bar-wrapper">
-                        <div class="meter-fill" id="sensitivity-spending" style="width: 50%;"></div>
-                      </div>
-                      <span class="meter-value-txt" id="sensitivity-spending-txt">Neutral</span>
+                      <span class="meter-label">Consumer Spending</span>
+                      <div class="meter-bar-wrapper"><div class="meter-fill" id="sensitivity-consumer" style="width:40%"></div></div>
+                      <span class="meter-value-txt" id="sensitivity-consumer-txt">Low</span>
                     </div>
                   </div>
                 </div>
               </div>
 
-            </div>
-
-            <!-- Right Side: Order Entry Panel -->
-            <div class="order-panel-container">
-              <div class="card order-card">
-                <div class="order-header-tabs">
-                  <button class="order-tab active" data-order-type="buy" id="order-tab-buy">Buy</button>
-                  <button class="order-tab" data-order-type="sell" id="order-tab-sell">Sell</button>
+              <!-- Holdings -->
+              <div class="holdings-section" style="margin-top:var(--space-5)">
+                <div class="section-header">
+                  <h3>Your Holdings</h3>
+                  <span class="badge badge-neutral">3 positions</span>
                 </div>
-                
-                <div class="order-body">
-                  <div class="order-row">
-                    <span class="order-label">Invest In</span>
-                    <span class="order-value highlight-symbol" id="order-stock-symbol">AAPL</span>
+                <div class="section-body" id="holdings-list">
+                  <div class="holding-row">
+                    <div class="company-avatar">NV</div>
+                    <div class="company-info"><div class="company-name">NVIDIA</div><div class="company-ticker">10 shares · Avg $118.50</div></div>
+                    <div class="company-price"><div class="company-price-value">$1,312.80</div><div class="company-price-change price-up">+10.8%</div></div>
                   </div>
-                  
-                  <div class="order-row">
-                    <label for="order-quantity" class="order-label">Shares</label>
-                    <input type="number" id="order-quantity" placeholder="0" min="0.001" step="any" required>
+                  <div class="holding-row">
+                    <div class="company-avatar">AP</div>
+                    <div class="company-info"><div class="company-name">Apple Inc.</div><div class="company-ticker">5 shares · Avg $210.00</div></div>
+                    <div class="company-price"><div class="company-price-value">$1,087.50</div><div class="company-price-change price-up">+3.6%</div></div>
                   </div>
-                  
-                  <div class="order-row pricing-row">
-                    <span class="order-label">Market Price</span>
-                    <span class="order-value" id="order-market-price">$175.50</span>
+                  <div class="holding-row">
+                    <div class="company-avatar">MS</div>
+                    <div class="company-info"><div class="company-name">Microsoft</div><div class="company-ticker">3 shares · Avg $445.00</div></div>
+                    <div class="company-price"><div class="company-price-value">$1,302.00</div><div class="company-price-change price-down">-2.7%</div></div>
                   </div>
-                  
-                  <hr class="order-divider">
-                  
-                  <div class="order-row total-row">
-                    <span class="order-label">Estimated Cost</span>
-                    <span class="order-value" id="order-estimated-cost">$0.00</span>
-                  </div>
-
-                  <!-- Error message display container -->
-                  <div class="order-error-message" id="order-error-box" style="display: none;">
-                    Invalid funds for transaction.
-                  </div>
-                  
-                  <button class="btn btn-buy-submit" id="btn-submit-order">Buy Shares</button>
-                  
-                  <div class="order-cash-available">
-                    <span id="order-cash-txt">$10,000.00</span> Buying Power Available
-                  </div>
-                </div>
-              </div>
-
-              <!-- Transaction Log -->
-              <div class="card recent-transactions-card">
-                <h3>Recent Activity</h3>
-                <div class="transactions-list" id="recent-transactions-list">
-                  <div class="empty-transactions">No transactions yet. Buy some stock to start investing!</div>
                 </div>
               </div>
             </div>
 
+            <!-- Sidebar -->
+            <div class="sidebar-panel">
+              <!-- Trade Widget -->
+              <div class="trade-widget">
+                <div class="trade-type-toggle">
+                  <button class="trade-type-btn active-buy" id="btn-buy">Buy</button>
+                  <button class="trade-type-btn" id="btn-sell">Sell</button>
+                </div>
+                <div class="trade-input-group">
+                  <div class="trade-input-label">Shares</div>
+                  <input type="number" class="trade-input" id="trade-shares" placeholder="0" min="0.01" step="0.01">
+                </div>
+                <div class="trade-summary">
+                  <div class="trade-summary-row">
+                    <span class="trade-summary-label">Market Price</span>
+                    <span class="trade-summary-value" id="trade-market-price">$131.28</span>
+                  </div>
+                  <div class="trade-summary-row">
+                    <span class="trade-summary-label">Estimated Cost</span>
+                    <span class="trade-summary-value" id="trade-est-cost">$0.00</span>
+                  </div>
+                  <div class="trade-summary-row">
+                    <span class="trade-summary-label">Commission</span>
+                    <span class="trade-summary-value text-success">Free</span>
+                  </div>
+                </div>
+                <button class="btn btn-success btn-lg trade-btn" id="btn-execute-trade">Buy NVDA</button>
+              </div>
+
+              <!-- Watchlist -->
+              <div class="watchlist-section">
+                <div class="section-header">
+                  <h3>Watchlist</h3>
+                  <button class="btn btn-ghost btn-sm">+ Add</button>
+                </div>
+                <div class="section-body" id="watchlist-body">
+                  <div class="watchlist-row">
+                    <div class="company-avatar" style="background:var(--color-success-light);color:var(--color-success)">TS</div>
+                    <div class="company-info"><div class="company-name">Tesla</div><div class="company-ticker">TSLA</div></div>
+                    <div class="company-price"><div class="company-price-value">$248.90</div><div class="company-price-change price-up">+1.8%</div></div>
+                  </div>
+                  <div class="watchlist-row">
+                    <div class="company-avatar" style="background:var(--color-primary-light);color:var(--color-primary)">AM</div>
+                    <div class="company-info"><div class="company-name">Amazon</div><div class="company-ticker">AMZN</div></div>
+                    <div class="company-price"><div class="company-price-value">$192.40</div><div class="company-price-change price-down">-0.6%</div></div>
+                  </div>
+                  <div class="watchlist-row">
+                    <div class="company-avatar" style="background:var(--color-warning-light);color:var(--color-warning)">ME</div>
+                    <div class="company-info"><div class="company-name">Meta</div><div class="company-ticker">META</div></div>
+                    <div class="company-price"><div class="company-price-value">$512.30</div><div class="company-price-change price-up">+2.1%</div></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Recent Activity -->
+              <div class="activity-section">
+                <div class="section-header">
+                  <h3>Recent Activity</h3>
+                </div>
+                <div id="recent-activity">
+                  <div class="activity-item">
+                    <div class="activity-icon activity-icon-buy">↑</div>
+                    <div style="flex:1"><div style="font-size:13px;font-weight:500">Bought NVDA</div><div style="font-size:11px;color:var(--text-tertiary)">10 shares @ $118.50</div></div>
+                    <span style="font-size:12px;color:var(--text-tertiary)">2d ago</span>
+                  </div>
+                  <div class="activity-item">
+                    <div class="activity-icon activity-icon-buy">↑</div>
+                    <div style="flex:1"><div style="font-size:13px;font-weight:500">Bought AAPL</div><div style="font-size:11px;color:var(--text-tertiary)">5 shares @ $210.00</div></div>
+                    <span style="font-size:12px;color:var(--text-tertiary)">5d ago</span>
+                  </div>
+                  <div class="activity-item">
+                    <div class="activity-icon activity-icon-sell">↓</div>
+                    <div style="flex:1"><div style="font-size:13px;font-weight:500">Sold TSLA</div><div style="font-size:11px;color:var(--text-tertiary)">2 shares @ $251.30</div></div>
+                    <span style="font-size:12px;color:var(--text-tertiary)">1w ago</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
-        <!-- ================= LEARN ACADEMY VIEW ================= -->
+        <!-- ═══ LEARN VIEW ═══ -->
         <section id="learn-view" class="view-section">
-          
-          <!-- Learning Dashboard Summary -->
-          <div class="academy-summary-banner card">
-            <div class="summary-info">
-              <h2>Welcome to the PreStocks Academy</h2>
-              <p>Master financial concepts, build disciplined wealth, and complete quizzes to earn certifications and unlock simulated bonuses.</p>
-              <div class="academy-progress-container">
-                <span class="progress-txt">Academy Progress: <strong id="academy-progress-percent">0%</strong> Completed</span>
-                <div class="progress-bar-bg">
-                  <div class="progress-bar-fill" id="academy-progress-fill" style="width: 0%;"></div>
-                </div>
-              </div>
-            </div>
-            
-            <div class="academy-stats">
-              <div class="stat-box">
-                <span class="stat-value" id="academy-completed-tracks">0/4</span>
-                <span class="stat-lbl">Tracks Completed</span>
-              </div>
-              <div class="stat-box">
-                <span class="stat-value" id="academy-score">0</span>
-                <span class="stat-lbl">Quiz Score Points</span>
-              </div>
-              <div class="stat-box">
-                <span class="stat-value" id="academy-unlocked-badges">None</span>
-                <span class="stat-lbl">Badges Earned</span>
-              </div>
-            </div>
+          <div class="academy-header">
+            <h2>Learning Academy</h2>
+            <p>Master financial concepts through structured modules. Pass quizzes to unlock trading features and advance your tier.</p>
           </div>
-
-          <!-- Learning Main Sections (Lessons Grid & SIP Calculator) -->
-          <div class="academy-layout-grid">
-            
-            <!-- Left Side: Interactive Lessons -->
-            <div class="lessons-area">
-              <h3>Interactive Educational Tracks</h3>
-              <div class="tracks-grid" id="tracks-cards-container">
-                <!-- Dynamically loaded learning tracks -->
-              </div>
-
-              <!-- Interactive Lesson Slide overlay (Hidden by default) -->
-              <div class="lesson-viewer-card card" id="lesson-viewer" style="display: none;">
-                <div class="viewer-header">
-                  <div class="viewer-title-row">
-                    <span class="viewer-track-badge" id="lesson-track-badge">Stocks 101</span>
-                    <h3 id="lesson-slide-title">What is a Stock?</h3>
-                  </div>
-                  <button class="btn btn-close-viewer" id="btn-close-lesson">✕ Close</button>
-                </div>
-                
-                <div class="viewer-body">
-                  <div class="viewer-progress-indicator" id="lesson-slide-indicator">Slide 1 of 4</div>
-                  
-                  <div class="lesson-slide-content">
-                    <p id="lesson-text-content">Lesson description...</p>
-                    <ul class="lesson-bullets-list" id="lesson-bullets-container">
-                      <!-- Bullets go here -->
-                    </ul>
-                  </div>
-                  
-                  <!-- Quiz Interface (Hidden until active in slides) -->
-                  <div class="lesson-quiz-container" id="quiz-container" style="display: none;">
-                    <h4 class="quiz-question" id="quiz-question-txt">Which of the following is true?</h4>
-                    <div class="quiz-options-list" id="quiz-options-container">
-                      <!-- Options buttons -->
-                    </div>
-                    <div class="quiz-feedback-box" id="quiz-feedback" style="display: none;">
-                      <div class="feedback-status" id="quiz-feedback-title">Correct!</div>
-                      <p class="feedback-explanation" id="quiz-feedback-explanation">Explanation content...</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="viewer-footer">
-                  <button class="btn btn-secondary" id="btn-lesson-prev">← Previous</button>
-                  <button class="btn btn-primary" id="btn-lesson-next">Next →</button>
-                  <button class="btn btn-success" id="btn-quiz-submit" style="display: none;">Submit Answer</button>
-                  <button class="btn btn-primary" id="btn-quiz-next" style="display: none;">Next Question</button>
-                  <button class="btn btn-success" id="btn-lesson-finish" style="display: none;">Finish Track 🎓</button>
-                </div>
-              </div>
-            </div>
-
-            <!-- Right Side: SIP Calculator & Compounding Playground -->
-            <div class="sip-calculator-area">
-              <div class="card sip-card">
-                <div class="sip-header">
-                  <h3>🐷 SIP Compounding Playground</h3>
-                  <p>Calculate how systematic investing builds huge wealth over time compared to normal bank savings.</p>
-                </div>
-                
-                <div class="sip-inputs">
-                  <div class="sip-input-group">
-                    <div class="sip-lbl-row">
-                      <label for="sip-monthly">Monthly Investment</label>
-                      <span class="sip-val-bubble" id="sip-monthly-bubble">$500</span>
-                    </div>
-                    <input type="range" id="sip-monthly" min="10" max="2000" step="10" value="500">
-                  </div>
-
-                  <div class="sip-input-group">
-                    <div class="sip-lbl-row">
-                      <label for="sip-returns">Expected Annual Returns</label>
-                      <span class="sip-val-bubble" id="sip-returns-bubble">12%</span>
-                    </div>
-                    <input type="range" id="sip-returns" min="1" max="30" step="0.5" value="12">
-                  </div>
-
-                  <div class="sip-input-group">
-                    <div class="sip-lbl-row">
-                      <label for="sip-duration">Time Period (Years)</label>
-                      <span class="sip-val-bubble" id="sip-duration-bubble">15 Years</span>
-                    </div>
-                    <input type="range" id="sip-duration" min="1" max="40" step="1" value="15">
-                  </div>
-                </div>
-
-                <div class="sip-results-row">
-                  <div class="sip-res-box">
-                    <span class="sip-res-lbl">Invested Amount</span>
-                    <span class="sip-res-val" id="sip-invested-total">$90,000</span>
-                  </div>
-                  <div class="sip-res-box">
-                    <span class="sip-res-lbl">Wealth Gain</span>
-                    <span class="sip-res-val gain-color" id="sip-gain-total">$162,287</span>
-                  </div>
-                  <div class="sip-res-box">
-                    <span class="sip-res-lbl">Total Value</span>
-                    <span class="sip-res-val total-color" id="sip-value-total">$252,287</span>
-                  </div>
-                </div>
-
-                <!-- Custom SVG SIP visualization -->
-                <div class="sip-chart-container">
-                  <svg id="sip-growth-svg" width="100%" height="160" viewBox="0 0 400 160" preserveAspectRatio="none">
-                    <path id="sip-invested-path" d="" fill="none" stroke="#888" stroke-width="2.5" stroke-dasharray="3,3" />
-                    <path id="sip-total-path" d="" fill="none" stroke="#00c805" stroke-width="3" />
-                    <!-- Glowing gradient under total curve -->
-                    <path id="sip-total-area" d="" fill="url(#chart-glow-gradient)" opacity="0.15" />
-                  </svg>
-                  <div class="sip-chart-legend">
-                    <span class="legend-item"><span class="legend-color-dot" style="background-color: #888; border-style: dashed;"></span> Total Invested</span>
-                    <span class="legend-item"><span class="legend-color-dot" style="background-color: #00c805;"></span> Total Wealth Value</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          </div>
+          <div class="tracks-grid" id="tracks-grid"></div>
         </section>
 
-        <!-- ================= AI PREDICTOR VIEW ================= -->
+        <!-- ═══ AI PREDICTOR VIEW ═══ -->
         <section id="predictor-view" class="view-section">
-          <div class="predictor-grid">
-            
-            <!-- Left Panel: Sandbox Parameters -->
-            <div class="predictor-inputs-panel card">
-              <h2>🔮 Market Sentiment & Prediction Sandbox</h2>
-              <p>Simulate global macroeconomic shocks, set trade tariffs, select current news headlines, and see how they impact stock prices in real time using our predictive analysis engine.</p>
-              
-              <div class="predictor-form">
-                
-                <!-- Stock Select -->
-                <div class="form-group">
-                  <label for="predict-stock-select">Target Asset to Predict</label>
-                  <select id="predict-stock-select" class="form-control">
-                    <!-- Loaded dynamically -->
-                  </select>
-                </div>
-
-                <hr class="form-divider">
-
-                <h3>1. Global Economic Conditions</h3>
-                
-                <!-- Interest Rates -->
-                <div class="form-group slider-group">
-                  <div class="form-lbl-row">
-                    <label>Central Bank Interest Rates</label>
-                    <span class="form-val-badge" id="predict-rates-badge">Medium (Normal)</span>
-                  </div>
-                  <input type="range" id="predict-rates" min="0" max="2" step="1" value="1">
-                  <div class="slider-ticks">
-                    <span>Low (Stimulative)</span>
-                    <span>Medium</span>
-                    <span>High (Restrictive)</span>
-                  </div>
-                </div>
-
-                <!-- Global Trade Tensions -->
-                <div class="form-group slider-group">
-                  <div class="form-lbl-row">
-                    <label>Global Trade Tensions & Tariffs</label>
-                    <span class="form-val-badge" id="predict-trade-badge">Moderate</span>
-                  </div>
-                  <input type="range" id="predict-trade" min="0" max="2" step="1" value="1">
-                  <div class="slider-ticks">
-                    <span>Low (Free Trade)</span>
-                    <span>Moderate</span>
-                    <span>High (Trade Wars)</span>
-                  </div>
-                </div>
-
-                <!-- Consumer Spending -->
-                <div class="form-group slider-group">
-                  <div class="form-lbl-row">
-                    <label>Consumer Spending & Confidence</label>
-                    <span class="form-val-badge" id="predict-spending-badge">Stable</span>
-                  </div>
-                  <input type="range" id="predict-spending" min="0" max="2" step="1" value="1">
-                  <div class="slider-ticks">
-                    <span>Weak (Recessionary)</span>
-                    <span>Stable</span>
-                    <span>Strong (Booming)</span>
-                  </div>
-                </div>
-
-                <hr class="form-divider">
-
-                <h3>2. Market News & Events</h3>
-                
-                <div class="form-group">
-                  <label for="predict-headline-select">Select a Headline Event</label>
-                  <select id="predict-headline-select" class="form-control">
-                    <option value="custom">-- Custom Headline Input --</option>
-                    <option value="tech-ai" selected>Tech companies announce breakthrough in Artificial General Intelligence (AGI)</option>
-                    <option value="tariff-hike">Global trade negotiations break down; tariffs increased by 15% across electronics</option>
-                    <option value="inflation-drop">Inflation cools down below targets, paving the way for immediate interest rate cuts</option>
-                    <option value="energy-crisis">Crude oil prices surge 20% due to major supply route disruptions</option>
-                    <option value="crypto-ban">New international regulatory commission proposes strict oversight on digital assets</option>
-                  </select>
-                </div>
-
-                <div class="form-group" id="custom-headline-wrapper" style="display: none;">
-                  <label for="predict-custom-headline">Enter Custom News Headline</label>
-                  <input type="text" id="predict-custom-headline" class="form-control" placeholder="e.g. Apple releases new neural headset to massive demand">
-                </div>
-
-                <button class="btn btn-predict-submit" id="btn-run-prediction">🔮 Run Market Simulation</button>
-              </div>
-            </div>
-
-            <!-- Right Panel: Prediction Output Visualizer -->
-            <div class="predictor-output-panel card" id="prediction-output-box">
-              <div class="output-placeholder" id="predict-placeholder">
-                <span class="placeholder-icon">🔮</span>
-                <h3>Ready to Analyze</h3>
-                <p>Configure economic inputs and click "Run Market Simulation" on the left to generate futuristic forecasts, sentiment indexes, and projected price charts.</p>
-              </div>
-
-              <!-- Scanner Screen (Hidden by default) -->
-              <div class="scanner-screen" id="predict-scanner" style="display: none;">
-                <div class="scanner-grid-bg"></div>
-                <div class="scanner-sweep-line"></div>
-                <div class="scanner-content">
-                  <div class="scanner-spinner"></div>
-                  <p class="scanner-text" id="scanner-status-text">Ingesting macroeconomic data feeds...</p>
-                </div>
-              </div>
-
-              <!-- Main Results Screen (Hidden by default) -->
-              <div class="prediction-results" id="predict-results" style="display: none;">
-                <div class="results-header">
-                  <h3>Analysis Complete</h3>
-                  <span class="result-badge-type positive" id="result-sentiment-badge">75% BULLISH</span>
-                </div>
-
-                <div class="results-kpis">
-                  <div class="kpi-box">
-                    <span class="kpi-lbl">Target Asset</span>
-                    <span class="kpi-val" id="result-asset">AAPL</span>
-                  </div>
-                  <div class="kpi-box">
-                    <span class="kpi-lbl">Projected Direction</span>
-                    <span class="kpi-val positive" id="result-direction">+5.4%</span>
-                  </div>
-                  <div class="kpi-box">
-                    <span class="kpi-lbl">Risk Rating</span>
-                    <span class="kpi-val" id="result-risk">Moderate</span>
-                  </div>
-                </div>
-
-                <div class="result-chart-card">
-                  <h4>Forecast Trend Line (Next 30 Days)</h4>
-                  <!-- Custom SVG Chart for predictions -->
-                  <div class="svg-chart-wrapper">
-                    <svg id="predict-result-svg" width="100%" height="150" viewBox="0 0 400 150" preserveAspectRatio="none">
-                      <!-- Grid and Paths will go here -->
-                      <g id="predict-grid"></g>
-                      <!-- Historical Line -->
-                      <path id="predict-historical-path" d="" fill="none" stroke="#777" stroke-width="2" />
-                      <!-- Future dashed forecast line -->
-                      <path id="predict-forecast-path" d="" fill="none" stroke="#00c805" stroke-width="2.5" stroke-dasharray="4,4" />
-                      <circle id="predict-breakpoint-dot" r="4" fill="#00c805" />
-                    </svg>
-                  </div>
-                </div>
-
-                <div class="result-explanation">
-                  <h4>Economic Reasoning Report</h4>
-                  <p id="predict-explanation-txt">The AI models predict an upward trend because of interest rate cuts and high sensitivity to consumer spending...</p>
-                </div>
-              </div>
-            </div>
-
-          </div>
+          <div class="predictor-grid" id="predictor-area"></div>
         </section>
 
-        <!-- ================= GLOBAL MARKETS VIEW ================= -->
+        <!-- ═══ MARKETS VIEW ═══ -->
         <section id="markets-view" class="view-section">
-          
-          <div class="markets-top-tickers">
-            <div class="ticker-pill positive">
-              <span class="ticker-symbol">S&P 500 (SPY)</span>
-              <span class="ticker-val" id="market-spy-val">$450.20</span>
-              <span class="ticker-chg" id="market-spy-chg">+0.00%</span>
-            </div>
-            <div class="ticker-pill positive">
-              <span class="ticker-symbol">Apple (AAPL)</span>
-              <span class="ticker-val" id="market-aapl-val">$175.50</span>
-              <span class="ticker-chg" id="market-aapl-chg">+0.00%</span>
-            </div>
-            <div class="ticker-pill positive">
-              <span class="ticker-symbol">Nvidia (NVDA)</span>
-              <span class="ticker-val" id="market-nvda-val">$480.00</span>
-              <span class="ticker-chg" id="market-nvda-chg">+0.00%</span>
-            </div>
-            <div class="ticker-pill positive">
-              <span class="ticker-symbol">Bitcoin (BTC)</span>
-              <span class="ticker-val" id="market-btc-val">$42,500.00</span>
-              <span class="ticker-chg" id="market-btc-chg">+0.00%</span>
-            </div>
-          </div>
-
-          <div class="markets-main-grid">
-            
-            <!-- Heatmap / Sector performance -->
-            <div class="card sector-performance-card">
-              <h3>Sector Health & Heatmap</h3>
-              <p>Visual representation of market capitalization weighted sector updates (based on active simulated stock ticking).</p>
-              
-              <div class="sector-heatmap-grid">
-                <div class="heatmap-box tech-box positive" id="heatmap-tech">
-                  <span class="heatmap-title">Technology</span>
-                  <span class="heatmap-stock-list">AAPL</span>
-                  <span class="heatmap-chg" id="heatmap-tech-chg">+0.00%</span>
-                </div>
-                <div class="heatmap-box semi-box positive" id="heatmap-semis">
-                  <span class="heatmap-title">Semiconductors</span>
-                  <span class="heatmap-stock-list">NVDA</span>
-                  <span class="heatmap-chg" id="heatmap-semis-chg">+0.00%</span>
-                </div>
-                <div class="heatmap-box auto-box positive" id="heatmap-auto">
-                  <span class="heatmap-title">Automotive & Energy</span>
-                  <span class="heatmap-stock-list">TSLA</span>
-                  <span class="heatmap-chg" id="heatmap-auto-chg">+0.00%</span>
-                </div>
-                <div class="heatmap-box finance-box positive" id="heatmap-finance">
-                  <span class="heatmap-title">Financial Services</span>
-                  <span class="heatmap-stock-list">COIN</span>
-                  <span class="heatmap-chg" id="heatmap-finance-chg">+0.00%</span>
-                </div>
-                <div class="heatmap-box index-box positive" id="heatmap-index">
-                  <span class="heatmap-title">Index Benchmarks</span>
-                  <span class="heatmap-stock-list">SPY</span>
-                  <span class="heatmap-chg" id="heatmap-index-chg">+0.00%</span>
-                </div>
-                <div class="heatmap-box crypto-box positive" id="heatmap-crypto">
-                  <span class="heatmap-title">Cryptocurrency</span>
-                  <span class="heatmap-stock-list">BTC</span>
-                  <span class="heatmap-chg" id="heatmap-crypto-chg">+0.00%</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Global News Feed -->
-            <div class="card global-news-card">
-              <h3>Global Trade & Financial News Feed</h3>
-              <div class="news-list" id="markets-news-feed">
-                <!-- Loaded dynamically -->
-              </div>
-            </div>
-
-          </div>
+          <div class="markets-grid" id="markets-area"></div>
         </section>
 
-        <!-- ================= DATA INFRASTRUCTURE VIEW ================= -->
+        <!-- ═══ INFRA VIEW ═══ -->
         <section id="infra-view" class="view-section">
-          <div class="infra-grid">
-            <div class="card infra-status-card">
-              <div class="infra-header-row">
-                <h3>Phase 1 Data Infrastructure</h3>
-                <button class="btn btn-primary" id="infra-refresh-btn">Refresh</button>
-              </div>
-              <p>
-                Nightly ETL pipelines for market, fundamentals, news, and economic feeds.
-                Stack: Python + Airflow + Postgres + Redis.
-              </p>
-              <div class="infra-kpi-row">
-                <div class="infra-kpi-box">
-                  <span class="infra-kpi-label">Environment</span>
-                  <span class="infra-kpi-value" id="infra-env">-</span>
-                </div>
-                <div class="infra-kpi-box">
-                  <span class="infra-kpi-label">Pipelines Healthy</span>
-                  <span class="infra-kpi-value" id="infra-healthy">-</span>
-                </div>
-                <div class="infra-kpi-box">
-                  <span class="infra-kpi-label">Database</span>
-                  <span class="infra-kpi-value" id="infra-db">-</span>
-                </div>
-              </div>
-              <div class="infra-actions-row">
-                <button class="btn btn-success" id="infra-run-btn">Run Nightly ETL Now</button>
-                <span class="infra-run-msg" id="infra-run-msg"></span>
-              </div>
-              <div class="infra-alert-row" id="infra-alerting-meta"></div>
-            </div>
-
-            <div class="card infra-runs-card">
-              <h3>Latest ETL Runs</h3>
-              <div class="infra-table-wrap">
-                <table class="infra-runs-table">
-                  <thead>
-                    <tr>
-                      <th>Pipeline</th>
-                      <th>Status</th>
-                      <th>Pulled</th>
-                      <th>Valid</th>
-                      <th>Stored</th>
-                      <th>Run Date</th>
-                    </tr>
-                  </thead>
-                  <tbody id="infra-runs-body">
-                    <tr>
-                      <td colspan="6">No ETL runs yet.</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
+          <div id="infra-area"></div>
         </section>
 
       </main>
-      
-      <!-- Right Sidebar: Stock Watchlist & Holdings -->
-      <aside class="sidebar-watchlist">
-        
-        <!-- Holdings Section -->
-        <div class="watchlist-section" id="sidebar-holdings-container">
-          <h3 class="section-title">Your Holdings</h3>
-          <div class="watchlist-list" id="holdings-list">
-            <!-- Loaded dynamically when stocks are bought -->
-            <div class="empty-list-placeholder">No assets owned.</div>
-          </div>
-        </div>
-        
-        <!-- Watchlist Section -->
-        <div class="watchlist-section">
-          <h3 class="section-title">Watchlist</h3>
-          <div class="watchlist-list" id="watchlist-list">
-            <!-- Stocks loaded dynamically -->
-          </div>
-        </div>
-      </aside>
+    </div>
 
+    <!-- Mobile Bottom Nav -->
+    <div class="mobile-nav">
+      <div class="mobile-nav-items">
+        <button class="mobile-nav-item active" data-tab="dashboard-view">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="3" y="13" width="7" height="4" rx="1"/><rect x="13" y="3" width="4" height="14" rx="1"/></svg>
+          <span>Home</span>
+        </button>
+        <button class="mobile-nav-item" data-tab="markets-view">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 17l4-4 3 3 7-7"/><path d="M14 9h3v3"/></svg>
+          <span>Markets</span>
+        </button>
+        <button class="mobile-nav-item" data-tab="learn-view">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+          <span>Learn</span>
+        </button>
+        <button class="mobile-nav-item" data-tab="predictor-view">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10" cy="10" r="7"/><path d="M10 6v4l3 2"/></svg>
+          <span>AI</span>
+        </button>
+      </div>
     </div>
   </div>
-  <script type="module" src="js/app.js"></script>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="js/data/stocks.js"></script>
+  <script src="js/data/lessons.js"></script>
+  <script src="js/components/charts.js"></script>
+  <script src="js/components/portfolio.js"></script>
+  <script src="js/components/academy.js"></script>
+  <script src="js/components/predictor.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>
