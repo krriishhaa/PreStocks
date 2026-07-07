@@ -336,3 +336,37 @@
 .text-success { color: var(--color-success); }
 .font-semibold { font-weight: var(--font-weight-semibold); }
 .font-bold { font-weight: var(--font-weight-bold); }
+
+/* ─── MOBILE ENHANCEMENTS ─── */
+.offline-banner {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
+  padding: var(--space-3) var(--space-5);
+  text-align: center; font-size: var(--font-size-sm); font-weight: var(--font-weight-medium);
+  animation: slideDown 0.3s ease;
+}
+.offline-banner.offline { background: var(--color-warning); color: #000; }
+.offline-banner.online { background: var(--color-success); color: #fff; }
+@keyframes slideDown { from { transform: translateY(-100%); } to { transform: translateY(0); } }
+
+/* Visualization styles */
+.viz-treemap { border-radius: var(--radius-xl); overflow: hidden; border: 1px solid var(--border-default); }
+.treemap-cell { display: flex; flex-direction: column; justify-content: flex-end; transition: opacity 0.2s; }
+.treemap-cell:hover { opacity: 0.85; }
+.viz-legend { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-3); }
+.legend-item { display: flex; align-items: center; gap: var(--space-1); font-size: var(--font-size-xs); }
+.legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+.viz-ownership-wrapper { display: flex; align-items: center; gap: var(--space-5); }
+.viz-sector-comparison { display: flex; flex-direction: column; gap: var(--space-3); }
+.sector-bar-row { display: flex; align-items: center; gap: var(--space-3); }
+.sector-bar-label { width: 100px; font-size: var(--font-size-xs); color: var(--text-secondary); text-align: right; }
+.sector-bar-track { flex: 1; height: 8px; background: var(--color-gray-200); border-radius: var(--radius-full); overflow: hidden; }
+.sector-bar-fill { height: 100%; border-radius: var(--radius-full); transition: width 0.5s ease; }
+.sector-bar-value { width: 50px; font-size: var(--font-size-xs); font-weight: var(--font-weight-semibold); }
+.sector-bar-value.positive { color: var(--color-success); }
+.sector-bar-value.negative { color: var(--color-danger); }
+
+.funding-node { display: flex; align-items: flex-start; gap: var(--space-3); padding: var(--space-3) 0; border-left: 2px solid var(--border-default); padding-left: var(--space-5); position: relative; }
+.funding-dot { width: 12px; height: 12px; border-radius: 50%; position: absolute; left: -7px; top: 8px; }
+.funding-stage { font-weight: var(--font-weight-semibold); font-size: var(--font-size-sm); text-transform: capitalize; }
+.funding-amount { font-size: var(--font-size-lg); font-weight: var(--font-weight-bold); }
+.funding-valuation, .funding-date, .funding-lead { font-size: var(--font-size-xs); color: var(--text-secondary); }

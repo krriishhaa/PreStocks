@@ -15,7 +15,8 @@ from app.core.infrastructure import (
 from app.routers import (
     auth, users, stocks, portfolio, flags,
     learning, social, health, companies,
-    news, watchlists, ai, notifications
+    news, watchlists, ai, notifications,
+    search, security
 )
 
 
@@ -67,6 +68,12 @@ def create_app() -> FastAPI:
 
     # ─── Notifications & Alerts ───
     app.include_router(notifications.router, prefix="/notifications", tags=["notifications"])
+
+    # ─── Search & Discovery ───
+    app.include_router(search.router, prefix="/search", tags=["search"])
+
+    # ─── Security ───
+    app.include_router(security.router, prefix="/security", tags=["security"])
 
     # ─── Admin/Internal ───
     @app.get("/metrics", tags=["admin"])
