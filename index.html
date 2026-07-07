@@ -11,34 +11,28 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/performance.css">
-  <!-- Critical CSS inlined for FCP -->
-  <style>
-    body{font-family:'Inter',sans-serif;margin:0;background:#F8FAFC}
-    .landing-page{background:#fff}
-    .landing-nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border-bottom:1px solid #E2E8F0}
-  </style>
+  <link rel="stylesheet" href="css/pages.css">
+  <style>body{font-family:'Inter',sans-serif;margin:0;background:#F8FAFC}.landing-page{background:#fff}</style>
 </head>
 <body>
-  <!-- Skip Link for Keyboard Users (WCAG 2.4.1) -->
   <a href="#main-content" class="skip-link">Skip to main content</a>
-  <!-- Live region for dynamic announcements -->
   <div id="a11y-live" aria-live="polite" aria-atomic="true" class="sr-only"></div>
 
-  <!-- ═══════════ HOMEPAGE (Landing) ═══════════ -->
+  <!-- ═══════════════════════════════════════════════════════════════
+       HOMEPAGE (Landing Page)
+       ═══════════════════════════════════════════════════════════════ -->
   <div id="landing-page" class="landing-page">
-
-    <!-- Landing Nav -->
     <header class="landing-nav" role="banner">
       <div class="container flex items-center justify-between" style="height:64px">
-        <div class="header-logo" aria-label="PreStocks Home">
+        <a href="/" class="header-logo" aria-label="PreStocks Home">
           <span class="logo-icon" aria-hidden="true">P</span>
-          <span style="font-size:18px;font-weight:700;color:var(--color-primary)">PreStocks</span>
-        </div>
-        <nav class="landing-nav-links">
+          <span class="logo-wordmark">PreStocks</span>
+        </a>
+        <nav class="landing-nav-links" aria-label="Landing navigation">
           <a href="#features">Features</a>
           <a href="#how-it-works">How it works</a>
+          <a href="#ai-showcase">AI</a>
           <a href="#testimonials">Testimonials</a>
-          <a href="#pricing">Pricing</a>
         </nav>
         <div class="flex gap-3 items-center">
           <button class="btn btn-ghost btn-md" onclick="showApp()">Log in</button>
@@ -47,63 +41,32 @@
       </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero-section">
+    <!-- HERO SECTION -->
+    <section class="hero-section" aria-label="Hero">
       <div class="container">
         <div class="hero-grid">
           <div class="hero-content">
-            <div class="hero-badge">
-              <span class="badge badge-info">New</span>
-              <span style="font-size:13px;color:var(--text-secondary)">AI-powered risk explanations now live</span>
-            </div>
+            <div class="hero-badge"><span class="badge badge-info">New</span><span>AI-powered risk explanations now live</span></div>
             <h1 class="hero-title">Learn to invest<br><span class="hero-title-accent">before you invest.</span></h1>
-            <p class="hero-subtitle">Practice trading with $10,000 in simulated cash. Our AI flags risks before you trade — so you understand what you're buying, not just how to buy it.</p>
+            <p class="hero-subtitle">Practice trading with $10,000 simulated cash. Our AI flags risks before you trade — so you understand what you're buying, not just how to buy it.</p>
             <div class="hero-cta">
               <button class="btn btn-primary btn-xl" onclick="showApp()">Start Paper Trading — Free</button>
-              <button class="btn btn-secondary btn-lg">Watch Demo</button>
+              <button class="btn btn-secondary btn-lg" onclick="document.getElementById('interactive-demo').scrollIntoView({behavior:'smooth'})">Try Interactive Demo</button>
             </div>
             <div class="hero-trust">
-              <div class="trust-item">
-                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 9l2 2 4-4"/><circle cx="8" cy="8" r="7"/></svg>
-                <span>No real money at risk</span>
-              </div>
-              <div class="trust-item">
-                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 9l2 2 4-4"/><circle cx="8" cy="8" r="7"/></svg>
-                <span>No credit card required</span>
-              </div>
-              <div class="trust-item">
-                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 9l2 2 4-4"/><circle cx="8" cy="8" r="7"/></svg>
-                <span>Risk flags on every stock</span>
-              </div>
+              <div class="trust-item"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 9l2 2 4-4"/><circle cx="8" cy="8" r="7"/></svg><span>No real money at risk</span></div>
+              <div class="trust-item"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 9l2 2 4-4"/><circle cx="8" cy="8" r="7"/></svg><span>No credit card required</span></div>
+              <div class="trust-item"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 9l2 2 4-4"/><circle cx="8" cy="8" r="7"/></svg><span>AI risk flags on every stock</span></div>
             </div>
           </div>
           <div class="hero-visual">
             <div class="hero-mockup">
-              <div class="mockup-header">
-                <div class="mockup-dot"></div><div class="mockup-dot"></div><div class="mockup-dot"></div>
-              </div>
+              <div class="mockup-header"><div class="mockup-dot"></div><div class="mockup-dot"></div><div class="mockup-dot"></div></div>
               <div class="mockup-body">
-                <div class="mockup-stock-row">
-                  <div><strong>NVDA</strong><br><span style="font-size:12px;color:var(--text-tertiary)">NVIDIA Corp</span></div>
-                  <div style="text-align:right"><strong>$131.28</strong><br><span class="price-up" style="font-size:12px">+3.42%</span></div>
-                </div>
+                <div class="mockup-stock-row"><div><strong>NVDA</strong><br><span class="text-sm text-tertiary">NVIDIA Corp</span></div><div style="text-align:right"><strong>$131.28</strong><br><span class="price-up text-sm">+3.42%</span></div></div>
                 <div class="mockup-chart-area"></div>
-                <div class="mockup-risk-flag">
-                  <div class="risk-flag-indicator high"></div>
-                  <div>
-                    <div style="font-size:12px;font-weight:600">High Volatility Flag</div>
-                    <div style="font-size:11px;color:var(--text-secondary)">Moves 2.3x more than sector median</div>
-                  </div>
-                  <button class="btn btn-sm btn-ghost" style="font-size:11px;color:var(--color-primary)">Explain</button>
-                </div>
-                <div class="mockup-risk-flag">
-                  <div class="risk-flag-indicator medium"></div>
-                  <div>
-                    <div style="font-size:12px;font-weight:600">Valuation Flag</div>
-                    <div style="font-size:11px;color:var(--text-secondary)">P/E in 85th percentile of 5yr range</div>
-                  </div>
-                  <button class="btn btn-sm btn-ghost" style="font-size:11px;color:var(--color-primary)">Explain</button>
-                </div>
+                <div class="mockup-risk-flag"><div class="risk-flag-indicator high"></div><div><div class="text-sm font-semibold">High Volatility Flag</div><div class="text-xs text-secondary">Moves 2.3x more than sector median</div></div><span class="btn btn-sm btn-ghost" style="color:var(--color-primary)">Explain</span></div>
+                <div class="mockup-risk-flag"><div class="risk-flag-indicator medium"></div><div><div class="text-sm font-semibold">Valuation Flag</div><div class="text-xs text-secondary">P/E in 85th percentile of 5yr range</div></div><span class="btn btn-sm btn-ghost" style="color:var(--color-primary)">Explain</span></div>
               </div>
             </div>
           </div>
@@ -111,461 +74,400 @@
       </div>
     </section>
 
-    <!-- Social Proof Strip -->
-    <section class="social-proof-strip">
+    <!-- SOCIAL PROOF -->
+    <section class="social-proof-strip" aria-label="Statistics">
       <div class="container">
         <div class="proof-stats">
           <div class="proof-stat"><span class="proof-number">12,400+</span><span class="proof-label">Paper traders</span></div>
           <div class="proof-stat"><span class="proof-number">850K+</span><span class="proof-label">Simulated trades</span></div>
-          <div class="proof-stat"><span class="proof-number">94%</span><span class="proof-label">Say they feel more confident</span></div>
+          <div class="proof-stat"><span class="proof-number">94%</span><span class="proof-label">Feel more confident</span></div>
           <div class="proof-stat"><span class="proof-number">4.8★</span><span class="proof-label">Average rating</span></div>
         </div>
       </div>
     </section>
 
-    <!-- Features Section -->
-    <section id="features" class="features-section lazy-section">
+    <!-- FEATURED COMPANIES -->
+    <section class="featured-companies-section lazy-section" aria-label="Featured companies">
       <div class="container">
-        <div class="section-intro">
-          <h2>Everything you need to invest with confidence</h2>
-          <p>Not another trading app. A learning platform that happens to let you trade.</p>
+        <div class="section-intro"><h2>Track the world's most innovative companies</h2><p>From Big Tech to pre-IPO unicorns — research them all with AI-powered insights.</p></div>
+        <div class="featured-companies-grid">
+          <div class="featured-company-card"><div class="fc-logo">NV</div><div class="fc-info"><span class="fc-name">NVIDIA</span><span class="fc-ticker">NVDA · $131.28</span></div><span class="badge badge-success">+3.4%</span></div>
+          <div class="featured-company-card"><div class="fc-logo">AP</div><div class="fc-info"><span class="fc-name">Apple</span><span class="fc-ticker">AAPL · $217.50</span></div><span class="badge badge-success">+1.2%</span></div>
+          <div class="featured-company-card"><div class="fc-logo">MS</div><div class="fc-info"><span class="fc-name">Microsoft</span><span class="fc-ticker">MSFT · $434.00</span></div><span class="badge badge-danger">-0.8%</span></div>
+          <div class="featured-company-card"><div class="fc-logo">ST</div><div class="fc-info"><span class="fc-name">Stripe</span><span class="fc-ticker">Pre-IPO · Private</span></div><span class="badge badge-info">Pre-IPO</span></div>
+          <div class="featured-company-card"><div class="fc-logo">SX</div><div class="fc-info"><span class="fc-name">SpaceX</span><span class="fc-ticker">Pre-IPO · Private</span></div><span class="badge badge-info">Pre-IPO</span></div>
+          <div class="featured-company-card"><div class="fc-logo">TS</div><div class="fc-info"><span class="fc-name">Tesla</span><span class="fc-ticker">TSLA · $248.90</span></div><span class="badge badge-success">+1.8%</span></div>
         </div>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section id="features" class="features-section lazy-section" aria-label="Features">
+      <div class="container">
+        <div class="section-intro"><h2>Everything you need to invest with confidence</h2><p>Not another trading app. A learning platform that happens to let you trade.</p></div>
         <div class="features-grid">
-          <div class="feature-card">
-            <div class="feature-icon" style="background:var(--color-danger-surface);color:var(--color-danger)">
-              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-            </div>
-            <h3>Pre-Trade Risk Flags</h3>
-            <p>8 risk indicators analyzed before every trade. Volatility, valuation, insider activity, and more — explained in plain English.</p>
+          <div class="feature-card"><div class="feature-icon" style="background:var(--color-danger-surface);color:var(--color-danger)"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div><h3>Pre-Trade Risk Flags</h3><p>8 risk indicators analyzed before every trade. Volatility, valuation, insider activity — explained in plain English.</p></div>
+          <div class="feature-card"><div class="feature-icon" style="background:var(--color-primary-surface);color:var(--color-primary)"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg></div><h3>AI Explanations</h3><p>Click "Explain This" on any flag. Our LLM tells you what it means — 2-3 sentences a beginner can understand.</p></div>
+          <div class="feature-card"><div class="feature-icon" style="background:var(--color-success-surface);color:var(--color-success)"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg></div><h3>Structured Learning</h3><p>13 modules from "What is a Stock?" to "Options Deep Dive". Pass 80% quizzes to unlock features.</p></div>
+          <div class="feature-card"><div class="feature-icon" style="background:var(--color-warning-surface);color:var(--color-warning)"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div><h3>Paper Trading</h3><p>$10,000 simulated cash. Buy, sell, track P&L — learn the market with zero financial risk.</p></div>
+          <div class="feature-card"><div class="feature-icon" style="background:var(--color-secondary-light);color:var(--color-secondary)"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg></div><h3>Reasoning-Based Social</h3><p>Share why you traded, not just what. Learn from others' thinking process.</p></div>
+          <div class="feature-card"><div class="feature-icon" style="background:var(--bg-tertiary);color:var(--text-secondary)"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg></div><h3>Zero Gamification</h3><p>No confetti. No streaks. No leaderboards. Calm, deliberate learning.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTERACTIVE DEMO -->
+    <section id="interactive-demo" class="demo-section lazy-section" aria-label="Interactive demo">
+      <div class="container">
+        <div class="section-intro"><h2>Try it now — no signup required</h2><p>Search any company and see the AI risk analysis in action.</p></div>
+        <div class="demo-container">
+          <div class="demo-search-wrapper">
+            <input type="text" class="demo-search-input" placeholder="Type a company name (e.g. NVIDIA, Apple, Stripe)..." id="demo-search" aria-label="Demo company search">
+            <button class="btn btn-primary btn-md" onclick="runDemoAnalysis()">Analyze</button>
           </div>
-          <div class="feature-card">
-            <div class="feature-icon" style="background:var(--color-primary-surface);color:var(--color-primary)">
-              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+          <div class="demo-result" id="demo-result">
+            <div class="demo-placeholder">
+              <svg width="48" height="48" fill="none" stroke="var(--text-tertiary)" stroke-width="1.5"><circle cx="24" cy="24" r="20"/><path d="M24 16v5l4 2"/></svg>
+              <p>Enter a company name above to see an instant AI risk analysis</p>
             </div>
-            <h3>AI Explanations</h3>
-            <p>Click "Explain This" on any flag. Our LLM reads historical context and tells you what it means — in 2-3 sentences a beginner can understand.</p>
-          </div>
-          <div class="feature-card">
-            <div class="feature-icon" style="background:var(--color-success-surface);color:var(--color-success)">
-              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
-            </div>
-            <h3>Structured Learning</h3>
-            <p>13 modules from "What is a Stock?" to "Options Deep Dive". Must pass quizzes (80%) to unlock trading features. No shortcuts.</p>
-          </div>
-          <div class="feature-card">
-            <div class="feature-icon" style="background:var(--color-warning-surface);color:var(--color-warning)">
-              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-            </div>
-            <h3>Paper Trading</h3>
-            <p>$10,000 simulated cash. Buy, sell, track P&L — learn the mechanics of the market with zero financial risk.</p>
-          </div>
-          <div class="feature-card">
-            <div class="feature-icon" style="background:var(--color-secondary-light);color:var(--color-secondary)">
-              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-            </div>
-            <h3>Reasoning-Based Social</h3>
-            <p>Share why you traded, not just what. No hype, no copy-trading — learn from others' thinking process.</p>
-          </div>
-          <div class="feature-card">
-            <div class="feature-icon" style="background:var(--bg-tertiary);color:var(--text-secondary)">
-              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-            </div>
-            <h3>Zero Gamification</h3>
-            <p>No confetti. No streaks. No push notifications. No leaderboards. Just calm, deliberate learning at your own pace.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- How It Works -->
-    <section id="how-it-works" class="how-section lazy-section">
+    <!-- AI SHOWCASE -->
+    <section id="ai-showcase" class="ai-showcase-section lazy-section" aria-label="AI showcase">
       <div class="container">
-        <div class="section-intro">
-          <h2>From zero knowledge to confident investing</h2>
-          <p>A structured path — not a firehose of information.</p>
+        <div class="section-intro"><h2>AI that explains, not just predicts</h2><p>Our AI reads fundamentals, news sentiment, and historical context to give you actionable explanations.</p></div>
+        <div class="ai-showcase-grid">
+          <div class="ai-showcase-card">
+            <div class="ai-card-header"><span class="ai-card-icon">🔍</span><h3>Research Assistant</h3></div>
+            <p class="ai-card-description">Ask: "Analyze Stripe" and get a full breakdown — risks, opportunities, financials, funding, and IPO probability.</p>
+            <div class="ai-card-example">
+              <div class="ai-msg ai-msg-user">Analyze Stripe's investment potential</div>
+              <div class="ai-msg ai-msg-assistant">Stripe is a private fintech company valued at ~$65B. Key risks: High valuation vs. revenue multiple (18x), increasing competition from Adyen. Opportunities: Embedded finance TAM expanding 34% YoY, strong enterprise adoption...</div>
+            </div>
+          </div>
+          <div class="ai-showcase-card">
+            <div class="ai-card-header"><span class="ai-card-icon">📊</span><h3>Portfolio Advisor</h3></div>
+            <p class="ai-card-description">Weekly analysis of your portfolio — diversification score, concentration warnings, and rebalancing suggestions.</p>
+            <div class="ai-card-example">
+              <div class="ai-advice-row"><span class="ai-advice-label">Health Score</span><span class="ai-advice-value">72/100</span></div>
+              <div class="ai-advice-row"><span class="ai-advice-label">Concentration Risk</span><span class="ai-advice-value text-warning">High — NVDA is 38%</span></div>
+              <div class="ai-advice-row"><span class="ai-advice-label">Missing Sectors</span><span class="ai-advice-value">Healthcare, Energy</span></div>
+            </div>
+          </div>
+          <div class="ai-showcase-card">
+            <div class="ai-card-header"><span class="ai-card-icon">⚠️</span><h3>Risk Flag Explainer</h3></div>
+            <p class="ai-card-description">Every risk flag comes with a plain-English explanation. Click "Explain" and understand why in 10 seconds.</p>
+            <div class="ai-card-example">
+              <div class="ai-flag-demo"><div class="risk-flag-indicator high"></div><strong>High Volatility</strong></div>
+              <div class="ai-msg ai-msg-assistant" style="margin-top:8px">NVDA's 30-day realized volatility is 2.3x the semiconductor sector median. This means on any given day, it could move ±4.2% vs the typical ±1.8%. Consider position sizing accordingly.</div>
+            </div>
+          </div>
         </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section id="how-it-works" class="how-section lazy-section" aria-label="How it works">
+      <div class="container">
+        <div class="section-intro"><h2>From zero knowledge to confident investing</h2><p>A structured path — not a firehose of information.</p></div>
         <div class="steps-grid">
-          <div class="step-card">
-            <div class="step-number">1</div>
-            <h3>Take the Risk Assessment</h3>
-            <p>5 scenario-based questions determine your starting tier and personalize your learning path.</p>
-          </div>
-          <div class="step-card">
-            <div class="step-number">2</div>
-            <h3>Complete Learning Modules</h3>
-            <p>Bite-sized lessons with quizzes. Pass 80% to unlock the next level and trading features.</p>
-          </div>
-          <div class="step-card">
-            <div class="step-number">3</div>
-            <h3>Research with Risk Flags</h3>
-            <p>Browse stocks with AI-powered risk analysis. Understand what you're buying before clicking "Buy".</p>
-          </div>
-          <div class="step-card">
-            <div class="step-number">4</div>
-            <h3>Trade with Guardrails</h3>
-            <p>Paper trade with warnings, cooling-off prompts, and portfolio concentration alerts. Build good habits.</p>
-          </div>
+          <div class="step-card"><div class="step-number">1</div><h3>Risk Assessment</h3><p>5 scenario-based questions determine your tier and personalize your learning path.</p></div>
+          <div class="step-card"><div class="step-number">2</div><h3>Learn Modules</h3><p>Bite-sized lessons with quizzes. Pass 80% to unlock trading features.</p></div>
+          <div class="step-card"><div class="step-number">3</div><h3>Research</h3><p>Browse stocks with AI-powered risk flags. Understand before you buy.</p></div>
+          <div class="step-card"><div class="step-number">4</div><h3>Trade Smart</h3><p>Paper trade with guardrails, cooling-off prompts, and concentration alerts.</p></div>
         </div>
       </div>
     </section>
 
-    <!-- Testimonials -->
-    <section id="testimonials" class="testimonials-section lazy-section">
+    <!-- TESTIMONIALS -->
+    <section id="testimonials" class="testimonials-section lazy-section" aria-label="Testimonials">
       <div class="container">
-        <div class="section-intro">
-          <h2>Trusted by beginners who became confident investors</h2>
-        </div>
+        <div class="section-intro"><h2>Trusted by 12,000+ learners worldwide</h2></div>
         <div class="testimonials-grid">
-          <div class="testimonial-card">
-            <div class="testimonial-stars">★★★★★</div>
-            <p>"I lost $2k on Robinhood before finding PreStocks. The risk flags would have saved me. Now I understand what P/E actually means before buying."</p>
-            <div class="testimonial-author">
-              <div class="testimonial-avatar">M</div>
-              <div><strong>Marcus T.</strong><br><span style="font-size:12px;color:var(--text-secondary)">Product Manager, Austin</span></div>
-            </div>
-          </div>
-          <div class="testimonial-card">
-            <div class="testimonial-stars">★★★★★</div>
-            <p>"Used it for my personal finance class. Students actually learn before they trade — the tier system means they can't skip fundamentals."</p>
-            <div class="testimonial-author">
-              <div class="testimonial-avatar">S</div>
-              <div><strong>Sarah K.</strong><br><span style="font-size:12px;color:var(--text-secondary)">HS Teacher, Denver</span></div>
-            </div>
-          </div>
-          <div class="testimonial-card">
-            <div class="testimonial-stars">★★★★★</div>
-            <p>"The 'Explain This' feature on risk flags is incredible. It's like having a patient finance professor available 24/7."</p>
-            <div class="testimonial-author">
-              <div class="testimonial-avatar">P</div>
-              <div><strong>Priya R.</strong><br><span style="font-size:12px;color:var(--text-secondary)">CS Student, Bangalore</span></div>
-            </div>
-          </div>
+          <div class="testimonial-card"><div class="testimonial-stars" aria-label="5 stars">★★★★★</div><p>"I lost $2k on Robinhood before finding PreStocks. The risk flags would have saved me. Now I understand P/E before buying."</p><div class="testimonial-author"><div class="testimonial-avatar">M</div><div><strong>Marcus T.</strong><br><span class="text-xs text-secondary">Product Manager, Austin</span></div></div></div>
+          <div class="testimonial-card"><div class="testimonial-stars" aria-label="5 stars">★★★★★</div><p>"Used it for my personal finance class. The tier system means students can't skip fundamentals."</p><div class="testimonial-author"><div class="testimonial-avatar">S</div><div><strong>Sarah K.</strong><br><span class="text-xs text-secondary">HS Teacher, Denver</span></div></div></div>
+          <div class="testimonial-card"><div class="testimonial-stars" aria-label="5 stars">★★★★★</div><p>"The 'Explain This' feature is incredible. Like having a patient finance professor available 24/7."</p><div class="testimonial-author"><div class="testimonial-avatar">P</div><div><strong>Priya R.</strong><br><span class="text-xs text-secondary">CS Student, Bangalore</span></div></div></div>
         </div>
       </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="cta-section">
-      <div class="container">
-        <div class="cta-box">
-          <h2>Ready to learn investing the right way?</h2>
-          <p>Join 12,000+ learners who chose education over gambling. Free forever for paper trading.</p>
-          <button class="btn btn-primary btn-xl" onclick="showApp()">Create Free Account</button>
-        </div>
-      </div>
-    </section>
+    <!-- CTA -->
+    <section class="cta-section lazy-section"><div class="container"><div class="cta-box"><h2>Ready to learn investing the right way?</h2><p>Join 12,000+ learners who chose education over gambling. Free forever for paper trading.</p><button class="btn btn-primary btn-xl" onclick="showApp()">Create Free Account</button></div></div></section>
 
-    <!-- Footer -->
-    <footer class="landing-footer">
+    <!-- FOOTER -->
+    <footer class="landing-footer" role="contentinfo">
       <div class="container">
         <div class="footer-grid">
-          <div class="footer-brand">
-            <div class="header-logo" style="margin-bottom:12px">
-              <span class="logo-icon">P</span>
-              <span style="font-size:16px;font-weight:700;color:var(--text-primary)">PreStocks</span>
-            </div>
-            <p style="font-size:13px;color:var(--text-secondary);max-width:240px">Learn to invest before you invest. Paper trading with AI-powered risk education.</p>
-          </div>
-          <div class="footer-links">
-            <h4>Product</h4>
-            <a href="#">Features</a><a href="#">Pricing</a><a href="#">Learning Modules</a><a href="#">Risk Flags</a>
-          </div>
-          <div class="footer-links">
-            <h4>Company</h4>
-            <a href="#">About</a><a href="#">Blog</a><a href="#">Careers</a><a href="#">Contact</a>
-          </div>
-          <div class="footer-links">
-            <h4>Legal</h4>
-            <a href="#">Privacy</a><a href="#">Terms</a><a href="#">Disclaimer</a>
-          </div>
+          <div class="footer-brand"><div class="header-logo" style="margin-bottom:12px"><span class="logo-icon" aria-hidden="true">P</span><span class="logo-wordmark" style="color:var(--text-primary)">PreStocks</span></div><p class="text-sm text-secondary" style="max-width:240px">Learn to invest before you invest. Paper trading with AI-powered risk education.</p></div>
+          <div class="footer-links"><h4>Product</h4><a href="#">Features</a><a href="#">Pricing</a><a href="#">Learning</a><a href="#">Risk Flags</a></div>
+          <div class="footer-links"><h4>Company</h4><a href="#">About</a><a href="#">Blog</a><a href="#">Careers</a><a href="#">Contact</a></div>
+          <div class="footer-links"><h4>Legal</h4><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Disclaimer</a></div>
         </div>
-        <div class="footer-bottom">
-          <span>© 2026 PreStocks. Not a broker-dealer. Paper trading only.</span>
-        </div>
+        <div class="footer-bottom"><span>© 2026 PreStocks. Not a broker-dealer. Paper trading only.</span></div>
       </div>
     </footer>
   </div>
 
-  <!-- ═══════════ APP (Dashboard + Views) ═══════════ -->
+  <!-- ═══════════════════════════════════════════════════════════════
+       APP SHELL (Dashboard + Company Page + Views)
+       ═══════════════════════════════════════════════════════════════ -->
   <div id="app-page" class="app-layout" style="display:none">
-
-    <!-- App Header -->
     <header class="app-header" role="banner">
-      <div class="header-logo" id="logo-btn" role="button" tabindex="0" aria-label="Go to homepage">
-        <span class="logo-icon" aria-hidden="true">P</span>
-        <span style="font-size:16px;font-weight:700;color:var(--color-primary)">PreStocks</span>
-      </div>
-      
+      <div class="header-logo" id="logo-btn" role="button" tabindex="0" aria-label="Go to homepage"><span class="logo-icon" aria-hidden="true">P</span><span class="logo-wordmark">PreStocks</span></div>
       <nav class="header-nav" role="tablist" aria-label="Main navigation">
-        <button class="nav-tab active" data-tab="dashboard-view" role="tab" aria-selected="true" aria-controls="dashboard-view">Dashboard</button>
-        <button class="nav-tab" data-tab="learn-view" role="tab" aria-selected="false" aria-controls="learn-view">Learn</button>
-        <button class="nav-tab" data-tab="predictor-view" role="tab" aria-selected="false" aria-controls="predictor-view">AI Insights</button>
-        <button class="nav-tab" data-tab="markets-view" role="tab" aria-selected="false" aria-controls="markets-view">Markets</button>
-        <button class="nav-tab" data-tab="infra-view" role="tab" aria-selected="false" aria-controls="infra-view">Data Infra</button>
+        <button class="nav-tab active" data-tab="dashboard-view" role="tab" aria-selected="true">Dashboard</button>
+        <button class="nav-tab" data-tab="company-view" role="tab" aria-selected="false">Company</button>
+        <button class="nav-tab" data-tab="learn-view" role="tab" aria-selected="false">Learn</button>
+        <button class="nav-tab" data-tab="predictor-view" role="tab" aria-selected="false">AI Insights</button>
+        <button class="nav-tab" data-tab="markets-view" role="tab" aria-selected="false">Markets</button>
       </nav>
-
-      <div class="header-actions">
-        <div class="search-bar" style="width:200px">
-          <svg class="search-bar-icon" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="7" cy="7" r="5"/><path d="M11 11l4 4"/></svg>
-          <input class="search-bar-input" placeholder="Search stocks..." type="text" aria-label="Search stocks" autocomplete="off" role="searchbox">
-        </div>
-      </div>
-
+      <div class="header-actions"><div class="search-bar" style="width:220px"><svg class="search-bar-icon" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="7" cy="7" r="5"/><path d="M11 11l4 4"/></svg><input class="search-bar-input" placeholder="Search stocks..." type="text" aria-label="Search stocks" role="searchbox"></div></div>
       <div class="header-portfolio-summary">
-        <div class="portfolio-metric">
-          <span class="metric-label">Portfolio</span>
-          <span class="metric-value positive" id="header-net-worth">$10,342.50</span>
-        </div>
-        <div class="portfolio-metric">
-          <span class="metric-label">Today</span>
-          <span class="metric-value positive" id="header-daily-return">+$42.50</span>
-        </div>
+        <div class="portfolio-metric"><span class="metric-label">Portfolio</span><span class="metric-value positive" id="header-net-worth">$10,342.50</span></div>
+        <div class="portfolio-metric"><span class="metric-label">Today</span><span class="metric-value positive" id="header-daily-return">+$42.50</span></div>
       </div>
     </header>
 
-    <!-- App Body -->
     <div class="app-body">
       <main class="main-content" id="main-content" role="main">
 
         <!-- ═══ DASHBOARD VIEW ═══ -->
-        <section id="dashboard-view" class="view-section active" role="tabpanel" aria-labelledby="nav-dashboard">
-          <div class="dashboard-grid">
-            <div class="chart-details-container">
-              <!-- Stock Header -->
-              <div class="stock-header">
-                <div class="stock-title-area">
-                  <h1 class="stock-name-title" id="active-stock-name">NVIDIA Corporation</h1>
-                  <div class="stock-meta-row">
-                    <span class="stock-symbol-badge" id="active-stock-symbol">NVDA</span>
-                    <span class="stock-category-badge" id="active-stock-category">Semiconductors</span>
-                  </div>
-                </div>
-                <div class="stock-price-area">
-                  <div class="stock-current-price" id="active-stock-price">$131.28</div>
-                  <div class="stock-change-percent price-up" id="active-stock-change">+$4.12 (+3.24%)</div>
-                </div>
-              </div>
+        <section id="dashboard-view" class="view-section active" role="tabpanel">
+          <!-- Portfolio Overview Row -->
+          <div class="portfolio-overview-row">
+            <div class="portfolio-stat-card"><span class="stat-label">Total Value</span><span class="stat-value">$10,342.50</span><span class="stat-change price-up">+3.4% all time</span></div>
+            <div class="portfolio-stat-card"><span class="stat-label">Today's P&L</span><span class="stat-value price-up">+$42.50</span><span class="stat-change">+0.41%</span></div>
+            <div class="portfolio-stat-card"><span class="stat-label">Cash Available</span><span class="stat-value">$6,340.20</span><span class="stat-change">61.3% of portfolio</span></div>
+            <div class="portfolio-stat-card"><span class="stat-label">Positions</span><span class="stat-value">3</span><span class="stat-change">in 2 sectors</span></div>
+          </div>
 
-              <!-- Chart -->
+          <div class="dashboard-grid">
+            <div class="dashboard-main">
+              <!-- Chart + Stock Info -->
               <div class="chart-card">
+                <div class="chart-card-header">
+                  <div><h2 class="stock-name-title" id="active-stock-name">NVIDIA Corporation</h2><div class="stock-meta-row"><span class="stock-symbol-badge" id="active-stock-symbol">NVDA</span><span class="stock-category-badge" id="active-stock-category">Semiconductors</span></div></div>
+                  <div class="stock-price-area"><div class="stock-current-price" id="active-stock-price">$131.28</div><div class="stock-change-percent price-up" id="active-stock-change">+$4.12 (+3.24%)</div></div>
+                </div>
                 <div class="svg-chart-wrapper" id="main-chart-wrapper">
-                  <div class="chart-tooltip-hover" id="chart-tooltip" style="display:none">
-                    <div class="tooltip-date" id="tooltip-date">-</div>
-                    <div class="tooltip-price" id="tooltip-price">-</div>
-                  </div>
-                  <svg id="main-stock-svg" width="100%" height="100%" viewBox="0 0 800 350" preserveAspectRatio="none">
-                    <defs>
-                      <linearGradient id="chart-glow-gradient" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stop-color="var(--color-success)" stop-opacity="0.2"/>
-                        <stop offset="100%" stop-color="var(--color-success)" stop-opacity="0.0"/>
-                      </linearGradient>
-                      <linearGradient id="chart-glow-gradient-red" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stop-color="var(--color-danger)" stop-opacity="0.2"/>
-                        <stop offset="100%" stop-color="var(--color-danger)" stop-opacity="0.0"/>
-                      </linearGradient>
-                    </defs>
+                  <svg id="main-stock-svg" width="100%" height="100%" viewBox="0 0 800 300" preserveAspectRatio="none" aria-label="Stock price chart">
+                    <defs><linearGradient id="chart-glow-gradient" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="var(--color-success)" stop-opacity="0.2"/><stop offset="100%" stop-color="var(--color-success)" stop-opacity="0.0"/></linearGradient></defs>
                     <g id="chart-grid"></g>
                     <path id="chart-area-path" d="" fill="url(#chart-glow-gradient)"/>
                     <path id="chart-line-path" d="" fill="none" stroke="var(--color-success)" stroke-width="2"/>
-                    <line id="chart-interactive-line" x1="0" y1="0" x2="0" y2="350" stroke="var(--color-gray-300)" stroke-dasharray="4,4" style="display:none"/>
-                    <circle id="chart-interactive-dot" r="5" fill="var(--color-success)" stroke="white" stroke-width="2" style="display:none"/>
                   </svg>
                 </div>
-                <div class="chart-timeframe-selectors">
-                  <button class="timeframe-btn" data-timeframe="1D">1D</button>
-                  <button class="timeframe-btn active" data-timeframe="1W">1W</button>
-                  <button class="timeframe-btn" data-timeframe="1M">1M</button>
-                  <button class="timeframe-btn" data-timeframe="1Y">1Y</button>
+                <div class="chart-timeframe-selectors"><button class="timeframe-btn" data-timeframe="1D">1D</button><button class="timeframe-btn active" data-timeframe="1W">1W</button><button class="timeframe-btn" data-timeframe="1M">1M</button><button class="timeframe-btn" data-timeframe="3M">3M</button><button class="timeframe-btn" data-timeframe="1Y">1Y</button></div>
+              </div>
+
+              <!-- AI Suggestions -->
+              <div class="card card-elevated" style="margin-top:var(--space-5)">
+                <div class="card-header"><h3 class="text-md font-semibold">AI Suggestions</h3><span class="badge badge-info">Personalized</span></div>
+                <div class="card-body" id="ai-suggestions-list">
+                  <div class="ai-suggestion-item"><span class="ai-suggestion-icon">⚠️</span><div class="ai-suggestion-content"><strong>Concentration Warning</strong><p class="text-sm text-secondary">NVDA is 31% of your portfolio. Consider diversifying into Healthcare or Energy sectors.</p></div></div>
+                  <div class="ai-suggestion-item"><span class="ai-suggestion-icon">📈</span><div class="ai-suggestion-content"><strong>Earnings Coming</strong><p class="text-sm text-secondary">AAPL reports Q3 earnings in 5 days. Historical volatility increases 2.1x around earnings.</p></div></div>
+                  <div class="ai-suggestion-item"><span class="ai-suggestion-icon">🎓</span><div class="ai-suggestion-content"><strong>Learning Unlock</strong><p class="text-sm text-secondary">Complete "Understanding P/E Ratios" to unlock limit orders and advanced charting.</p></div></div>
                 </div>
               </div>
 
-              <!-- Company Profile -->
-              <div class="stock-profile-card">
-                <h3>About Company</h3>
-                <p id="active-stock-description">NVIDIA designs and manufactures graphics processing units and system-on-chip units for gaming, professional visualization, data center, and automotive markets.</p>
-                <div class="sensitivity-meters">
-                  <h4>Macro Sensitivity</h4>
-                  <div class="meters-grid">
-                    <div class="meter-item">
-                      <span class="meter-label">Interest Rate Sensitivity</span>
-                      <div class="meter-bar-wrapper"><div class="meter-fill" id="sensitivity-rates" style="width:70%"></div></div>
-                      <span class="meter-value-txt" id="sensitivity-rates-txt">High</span>
-                    </div>
-                    <div class="meter-item">
-                      <span class="meter-label">Trade Tariff Impact</span>
-                      <div class="meter-bar-wrapper"><div class="meter-fill" id="sensitivity-trade" style="width:85%"></div></div>
-                      <span class="meter-value-txt" id="sensitivity-trade-txt">Very High</span>
-                    </div>
-                    <div class="meter-item">
-                      <span class="meter-label">Consumer Spending</span>
-                      <div class="meter-bar-wrapper"><div class="meter-fill" id="sensitivity-consumer" style="width:40%"></div></div>
-                      <span class="meter-value-txt" id="sensitivity-consumer-txt">Low</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Holdings -->
-              <div class="holdings-section" style="margin-top:var(--space-5)">
-                <div class="section-header">
-                  <h3>Your Holdings</h3>
-                  <span class="badge badge-neutral">3 positions</span>
-                </div>
-                <div class="section-body" id="holdings-list">
-                  <div class="holding-row">
-                    <div class="company-avatar">NV</div>
-                    <div class="company-info"><div class="company-name">NVIDIA</div><div class="company-ticker">10 shares · Avg $118.50</div></div>
-                    <div class="company-price"><div class="company-price-value">$1,312.80</div><div class="company-price-change price-up">+10.8%</div></div>
-                  </div>
-                  <div class="holding-row">
-                    <div class="company-avatar">AP</div>
-                    <div class="company-info"><div class="company-name">Apple Inc.</div><div class="company-ticker">5 shares · Avg $210.00</div></div>
-                    <div class="company-price"><div class="company-price-value">$1,087.50</div><div class="company-price-change price-up">+3.6%</div></div>
-                  </div>
-                  <div class="holding-row">
-                    <div class="company-avatar">MS</div>
-                    <div class="company-info"><div class="company-name">Microsoft</div><div class="company-ticker">3 shares · Avg $445.00</div></div>
-                    <div class="company-price"><div class="company-price-value">$1,302.00</div><div class="company-price-change price-down">-2.7%</div></div>
-                  </div>
+              <!-- News Feed -->
+              <div class="card card-elevated" style="margin-top:var(--space-5)">
+                <div class="card-header"><h3 class="text-md font-semibold">Market News</h3><button class="btn btn-ghost btn-sm">View All</button></div>
+                <div class="card-body-flush">
+                  <div class="news-item"><div class="news-title">NVIDIA beats Q2 estimates, data center revenue surges 154%</div><div class="news-meta"><span class="badge badge-success">Positive</span> · Reuters · 2h ago</div></div>
+                  <div class="news-item"><div class="news-title">Fed signals potential rate cut in September meeting</div><div class="news-meta"><span class="badge badge-neutral">Neutral</span> · Bloomberg · 4h ago</div></div>
+                  <div class="news-item"><div class="news-title">Apple delays AI features in EU due to regulatory concerns</div><div class="news-meta"><span class="badge badge-danger">Negative</span> · WSJ · 6h ago</div></div>
                 </div>
               </div>
             </div>
 
-            <!-- Sidebar -->
+            <!-- RIGHT SIDEBAR -->
             <div class="sidebar-panel">
               <!-- Trade Widget -->
               <div class="trade-widget">
-                <div class="trade-type-toggle">
-                  <button class="trade-type-btn active-buy" id="btn-buy">Buy</button>
-                  <button class="trade-type-btn" id="btn-sell">Sell</button>
-                </div>
-                <div class="trade-input-group">
-                  <div class="trade-input-label">Shares</div>
-                  <input type="number" class="trade-input" id="trade-shares" placeholder="0" min="0.01" step="0.01" aria-label="Number of shares to trade">
-                </div>
+                <div class="trade-type-toggle"><button class="trade-type-btn active-buy" id="btn-buy">Buy</button><button class="trade-type-btn" id="btn-sell">Sell</button></div>
+                <div class="trade-input-group"><div class="trade-input-label">Shares</div><input type="number" class="trade-input" id="trade-shares" placeholder="0" min="0.01" step="0.01" aria-label="Number of shares"></div>
                 <div class="trade-summary">
-                  <div class="trade-summary-row">
-                    <span class="trade-summary-label">Market Price</span>
-                    <span class="trade-summary-value" id="trade-market-price">$131.28</span>
-                  </div>
-                  <div class="trade-summary-row">
-                    <span class="trade-summary-label">Estimated Cost</span>
-                    <span class="trade-summary-value" id="trade-est-cost">$0.00</span>
-                  </div>
-                  <div class="trade-summary-row">
-                    <span class="trade-summary-label">Commission</span>
-                    <span class="trade-summary-value text-success">Free</span>
-                  </div>
+                  <div class="trade-summary-row"><span class="trade-summary-label">Price</span><span class="trade-summary-value" id="trade-market-price">$131.28</span></div>
+                  <div class="trade-summary-row"><span class="trade-summary-label">Est. Cost</span><span class="trade-summary-value" id="trade-est-cost">$0.00</span></div>
+                  <div class="trade-summary-row"><span class="trade-summary-label">Commission</span><span class="trade-summary-value text-success">$0</span></div>
                 </div>
                 <button class="btn btn-success btn-lg trade-btn" id="btn-execute-trade">Buy NVDA</button>
               </div>
 
               <!-- Watchlist -->
               <div class="watchlist-section">
-                <div class="section-header">
-                  <h3>Watchlist</h3>
-                  <button class="btn btn-ghost btn-sm">+ Add</button>
-                </div>
+                <div class="section-header"><h3>Watchlist</h3><button class="btn btn-ghost btn-sm">+</button></div>
                 <div class="section-body" id="watchlist-body">
-                  <div class="watchlist-row">
-                    <div class="company-avatar" style="background:var(--color-success-light);color:var(--color-success)">TS</div>
-                    <div class="company-info"><div class="company-name">Tesla</div><div class="company-ticker">TSLA</div></div>
-                    <div class="company-price"><div class="company-price-value">$248.90</div><div class="company-price-change price-up">+1.8%</div></div>
-                  </div>
-                  <div class="watchlist-row">
-                    <div class="company-avatar" style="background:var(--color-primary-light);color:var(--color-primary)">AM</div>
-                    <div class="company-info"><div class="company-name">Amazon</div><div class="company-ticker">AMZN</div></div>
-                    <div class="company-price"><div class="company-price-value">$192.40</div><div class="company-price-change price-down">-0.6%</div></div>
-                  </div>
-                  <div class="watchlist-row">
-                    <div class="company-avatar" style="background:var(--color-warning-light);color:var(--color-warning)">ME</div>
-                    <div class="company-info"><div class="company-name">Meta</div><div class="company-ticker">META</div></div>
-                    <div class="company-price"><div class="company-price-value">$512.30</div><div class="company-price-change price-up">+2.1%</div></div>
-                  </div>
+                  <div class="watchlist-row"><div class="company-avatar" style="background:var(--color-success-light);color:var(--color-success)">TS</div><div class="company-info"><div class="company-name">Tesla</div><div class="company-ticker">TSLA</div></div><div class="company-price"><div class="company-price-value">$248.90</div><div class="company-price-change price-up">+1.8%</div></div></div>
+                  <div class="watchlist-row"><div class="company-avatar" style="background:var(--color-primary-light);color:var(--color-primary)">AM</div><div class="company-info"><div class="company-name">Amazon</div><div class="company-ticker">AMZN</div></div><div class="company-price"><div class="company-price-value">$192.40</div><div class="company-price-change price-down">-0.6%</div></div></div>
+                  <div class="watchlist-row"><div class="company-avatar" style="background:var(--color-warning-light);color:var(--color-warning)">ME</div><div class="company-info"><div class="company-name">Meta</div><div class="company-ticker">META</div></div><div class="company-price"><div class="company-price-value">$512.30</div><div class="company-price-change price-up">+2.1%</div></div></div>
                 </div>
               </div>
 
-              <!-- Recent Activity -->
-              <div class="activity-section">
-                <div class="section-header">
-                  <h3>Recent Activity</h3>
+              <!-- Trending Companies -->
+              <div class="card card-elevated">
+                <div class="card-header"><h3 class="text-md font-semibold">Trending</h3></div>
+                <div class="card-body-flush">
+                  <div class="watchlist-row"><div class="company-avatar" style="background:#FEE2E2;color:#991B1B">1</div><div class="company-info"><div class="company-name">NVIDIA</div><div class="company-ticker">Most searched today</div></div></div>
+                  <div class="watchlist-row"><div class="company-avatar" style="background:#DBEAFE;color:#1E3A8A">2</div><div class="company-info"><div class="company-name">Palantir</div><div class="company-ticker">New ATH · +8.2%</div></div></div>
+                  <div class="watchlist-row"><div class="company-avatar" style="background:#D1FAE5;color:#065F46">3</div><div class="company-info"><div class="company-name">Reddit</div><div class="company-ticker">IPO anniversary</div></div></div>
                 </div>
-                <div id="recent-activity">
-                  <div class="activity-item">
-                    <div class="activity-icon activity-icon-buy">↑</div>
-                    <div style="flex:1"><div style="font-size:13px;font-weight:500">Bought NVDA</div><div style="font-size:11px;color:var(--text-tertiary)">10 shares @ $118.50</div></div>
-                    <span style="font-size:12px;color:var(--text-tertiary)">2d ago</span>
-                  </div>
-                  <div class="activity-item">
-                    <div class="activity-icon activity-icon-buy">↑</div>
-                    <div style="flex:1"><div style="font-size:13px;font-weight:500">Bought AAPL</div><div style="font-size:11px;color:var(--text-tertiary)">5 shares @ $210.00</div></div>
-                    <span style="font-size:12px;color:var(--text-tertiary)">5d ago</span>
-                  </div>
-                  <div class="activity-item">
-                    <div class="activity-icon activity-icon-sell">↓</div>
-                    <div style="flex:1"><div style="font-size:13px;font-weight:500">Sold TSLA</div><div style="font-size:11px;color:var(--text-tertiary)">2 shares @ $251.30</div></div>
-                    <span style="font-size:12px;color:var(--text-tertiary)">1w ago</span>
-                  </div>
+              </div>
+
+              <!-- Upcoming IPOs -->
+              <div class="card card-elevated">
+                <div class="card-header"><h3 class="text-md font-semibold">Upcoming IPOs</h3></div>
+                <div class="card-body-flush">
+                  <div class="ipo-item"><div class="ipo-name">Stripe</div><div class="ipo-meta">Fintech · Est. $65B</div><span class="badge badge-warning">Q4 2026</span></div>
+                  <div class="ipo-item"><div class="ipo-name">Databricks</div><div class="ipo-meta">AI/Data · Est. $43B</div><span class="badge badge-warning">2027</span></div>
+                  <div class="ipo-item"><div class="ipo-name">Shein</div><div class="ipo-meta">E-commerce · Est. $60B</div><span class="badge badge-neutral">TBD</span></div>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        <!-- ═══ LEARN VIEW ═══ -->
-        <section id="learn-view" class="view-section">
-          <div class="academy-header">
-            <h2>Learning Academy</h2>
-            <p>Master financial concepts through structured modules. Pass quizzes to unlock trading features and advance your tier.</p>
+        <!-- ═══ COMPANY PAGE ═══ -->
+        <section id="company-view" class="view-section" role="tabpanel">
+          <div class="company-page">
+            <!-- Company Header -->
+            <div class="company-page-header">
+              <div class="company-page-logo">NV</div>
+              <div class="company-page-info">
+                <h1 class="company-page-name">NVIDIA Corporation</h1>
+                <div class="company-page-meta"><span class="badge badge-neutral">NVDA</span><span class="badge badge-neutral">NASDAQ</span><span class="badge badge-neutral">Semiconductors</span><span class="badge badge-info">Public</span></div>
+              </div>
+              <div class="company-page-price"><div class="stock-current-price">$131.28</div><div class="stock-change-percent price-up">+$4.12 (+3.24%)</div></div>
+            </div>
+
+            <!-- Company Tabs -->
+            <div class="company-tabs">
+              <button class="company-tab active" data-ctab="overview">Overview</button>
+              <button class="company-tab" data-ctab="financials">Financials</button>
+              <button class="company-tab" data-ctab="funding">Funding</button>
+              <button class="company-tab" data-ctab="competitors">Competitors</button>
+              <button class="company-tab" data-ctab="ai-insights">AI Insights</button>
+              <button class="company-tab" data-ctab="news">News</button>
+              <button class="company-tab" data-ctab="risks">Risks</button>
+            </div>
+
+            <!-- OVERVIEW TAB -->
+            <div class="company-tab-content active" id="ctab-overview">
+              <div class="company-overview-grid">
+                <div class="company-overview-main">
+                  <div class="card card-elevated"><div class="card-body"><h3 class="text-lg font-semibold" style="margin-bottom:var(--space-3)">About</h3><p class="text-secondary" style="line-height:1.7">NVIDIA Corporation designs and manufactures graphics processing units (GPUs) and system-on-chip units. The company operates through two segments: Graphics and Compute & Networking. Its products serve gaming, professional visualization, data center, and automotive markets. NVIDIA is a leading player in AI chip manufacturing with dominant market share in training GPUs.</p></div></div>
+                  <!-- Key Metrics -->
+                  <div class="card card-elevated" style="margin-top:var(--space-4)">
+                    <div class="card-header"><h3 class="text-md font-semibold">Key Metrics</h3></div>
+                    <div class="card-body">
+                      <div class="metrics-grid">
+                        <div class="metric-box"><span class="metric-box-label">Market Cap</span><span class="metric-box-value">$3.2T</span></div>
+                        <div class="metric-box"><span class="metric-box-label">P/E Ratio</span><span class="metric-box-value">68.4x</span></div>
+                        <div class="metric-box"><span class="metric-box-label">Revenue (TTM)</span><span class="metric-box-value">$79.8B</span></div>
+                        <div class="metric-box"><span class="metric-box-label">Net Margin</span><span class="metric-box-value">55.2%</span></div>
+                        <div class="metric-box"><span class="metric-box-label">Employees</span><span class="metric-box-value">29,600</span></div>
+                        <div class="metric-box"><span class="metric-box-label">Founded</span><span class="metric-box-value">1993</span></div>
+                        <div class="metric-box"><span class="metric-box-label">CEO</span><span class="metric-box-value">Jensen Huang</span></div>
+                        <div class="metric-box"><span class="metric-box-label">HQ</span><span class="metric-box-value">Santa Clara, CA</span></div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Timeline -->
+                  <div class="card card-elevated" style="margin-top:var(--space-4)">
+                    <div class="card-header"><h3 class="text-md font-semibold">Company Timeline</h3></div>
+                    <div class="card-body">
+                      <div class="timeline">
+                        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><span class="timeline-date">Jun 2026</span><strong>Q1 FY2027 earnings beat: Revenue $44B (+262% YoY)</strong></div></div>
+                        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><span class="timeline-date">Mar 2026</span><strong>Blackwell B200 GPU mass production begins</strong></div></div>
+                        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><span class="timeline-date">Jan 2026</span><strong>Surpasses Apple as most valuable US company</strong></div></div>
+                        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><span class="timeline-date">Nov 2025</span><strong>10:1 stock split effective</strong></div></div>
+                        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><span class="timeline-date">1999</span><strong>IPO at $12/share on NASDAQ</strong></div></div>
+                        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><span class="timeline-date">1993</span><strong>Founded by Jensen Huang, Chris Malachowsky, Curtis Priem</strong></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Sidebar: SWOT + Risk Score -->
+                <div class="company-overview-sidebar">
+                  <div class="card card-elevated">
+                    <div class="card-header"><h3 class="text-md font-semibold">Risk Score</h3></div>
+                    <div class="card-body" style="text-align:center">
+                      <div class="risk-score-ring"><svg width="120" height="120" viewBox="0 0 120 120"><circle cx="60" cy="60" r="50" fill="none" stroke="var(--color-gray-200)" stroke-width="10"/><circle cx="60" cy="60" r="50" fill="none" stroke="var(--color-warning)" stroke-width="10" stroke-dasharray="220 314" stroke-linecap="round" transform="rotate(-90 60 60)"/><text x="60" y="65" text-anchor="middle" font-size="24" font-weight="700" fill="var(--text-primary)">62</text></svg></div>
+                      <div class="risk-score-label">Moderate Risk</div>
+                      <div class="risk-breakdown">
+                        <div class="risk-row"><span>Volatility</span><div class="mini-bar"><div class="mini-fill" style="width:78%;background:var(--color-danger)"></div></div><span>78</span></div>
+                        <div class="risk-row"><span>Valuation</span><div class="mini-bar"><div class="mini-fill" style="width:72%;background:var(--color-warning)"></div></div><span>72</span></div>
+                        <div class="risk-row"><span>Momentum</span><div class="mini-bar"><div class="mini-fill" style="width:45%;background:var(--color-success)"></div></div><span>45</span></div>
+                        <div class="risk-row"><span>Financials</span><div class="mini-bar"><div class="mini-fill" style="width:25%;background:var(--color-success)"></div></div><span>25</span></div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- SWOT -->
+                  <div class="card card-elevated" style="margin-top:var(--space-4)">
+                    <div class="card-header"><h3 class="text-md font-semibold">SWOT Analysis</h3><span class="badge badge-info">AI</span></div>
+                    <div class="card-body">
+                      <div class="swot-grid">
+                        <div class="swot-box swot-s"><h4>Strengths</h4><ul><li>90%+ AI training GPU market share</li><li>CUDA ecosystem moat</li><li>55% net margins</li></ul></div>
+                        <div class="swot-box swot-w"><h4>Weaknesses</h4><ul><li>China export restrictions</li><li>Concentration in data center</li><li>High valuation multiple</li></ul></div>
+                        <div class="swot-box swot-o"><h4>Opportunities</h4><ul><li>Sovereign AI infrastructure</li><li>Automotive self-driving</li><li>Edge AI deployment</li></ul></div>
+                        <div class="swot-box swot-t"><h4>Threats</h4><ul><li>AMD MI300X competition</li><li>Custom ASICs (Google TPU)</li><li>Regulatory scrutiny</li></ul></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- FINANCIALS TAB (placeholder) -->
+            <div class="company-tab-content" id="ctab-financials"><div class="card card-elevated"><div class="card-body"><h3>Financial Charts</h3><p class="text-secondary">Revenue, margins, and growth charts will render here from the Recharts library.</p><div class="skeleton-chart" style="margin-top:var(--space-4)"></div></div></div></div>
+
+            <!-- FUNDING TAB -->
+            <div class="company-tab-content" id="ctab-funding"><div class="card card-elevated"><div class="card-body"><h3>Funding History</h3><p class="text-secondary" style="margin-bottom:var(--space-4)">NVIDIA went public in 1999. As a public company, it raises capital through equity and debt markets.</p><div class="timeline"><div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><span class="timeline-date">Jan 1999</span><strong>IPO — $12/share on NASDAQ</strong><br><span class="text-sm text-secondary">Raised $42M at $650M valuation</span></div></div><div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><span class="timeline-date">Sep 2020</span><strong>$5B Senior Notes Offering</strong><br><span class="text-sm text-secondary">Debt financing for Arm acquisition attempt</span></div></div></div></div></div></div>
+
+            <!-- COMPETITORS TAB -->
+            <div class="company-tab-content" id="ctab-competitors"><div class="card card-elevated"><div class="card-header"><h3>Competitor Map</h3></div><div class="card-body"><div class="competitor-grid"><div class="competitor-card"><div class="competitor-avatar">AMD</div><div><strong>AMD</strong><p class="text-sm text-secondary">MI300X, direct GPU competition</p></div><span class="badge badge-danger">High overlap</span></div><div class="competitor-card"><div class="competitor-avatar">INTC</div><div><strong>Intel</strong><p class="text-sm text-secondary">Gaudi accelerators, data center</p></div><span class="badge badge-warning">Medium</span></div><div class="competitor-card"><div class="competitor-avatar">GOOG</div><div><strong>Google (TPU)</strong><p class="text-sm text-secondary">Custom silicon for AI training</p></div><span class="badge badge-warning">Medium</span></div><div class="competitor-card"><div class="competitor-avatar">AMZN</div><div><strong>AWS (Trainium)</strong><p class="text-sm text-secondary">Custom AI chips for cloud</p></div><span class="badge badge-neutral">Low</span></div></div></div></div></div>
+
+            <!-- AI INSIGHTS TAB -->
+            <div class="company-tab-content" id="ctab-ai-insights"><div class="card card-elevated"><div class="card-header"><h3>AI Research Report</h3><span class="badge badge-info">Generated today</span></div><div class="card-body"><div class="ai-report-section"><h4>Summary</h4><p>NVIDIA is the dominant player in AI accelerator hardware with 90%+ market share in training GPUs. Revenue is growing 262% YoY driven by hyperscaler demand for H100/B200 chips. Extremely strong financials but valuation is historically elevated at 68x P/E.</p></div><div class="ai-report-section"><h4>Key Opportunities</h4><ul class="ai-report-list"><li><strong>Sovereign AI:</strong> Nations building domestic AI infrastructure ($50B+ addressable market)</li><li><strong>Inference scaling:</strong> Deployment of AI models requires 10x more inference vs training GPUs</li><li><strong>Automotive:</strong> DRIVE platform partnerships with Mercedes, BYD, and others</li></ul></div><div class="ai-report-section"><h4>Key Risks</h4><ul class="ai-report-list"><li><strong>China restrictions:</strong> ~25% of revenue at risk from export controls</li><li><strong>Customer concentration:</strong> Top 4 customers (Microsoft, Google, Amazon, Meta) = 40%+ revenue</li><li><strong>Cyclicality:</strong> GPU demand could normalize after initial AI infrastructure buildout</li></ul></div></div></div></div>
+
+            <!-- NEWS TAB -->
+            <div class="company-tab-content" id="ctab-news"><div class="card card-elevated"><div class="card-header"><h3>Recent News</h3></div><div class="card-body-flush"><div class="news-item"><div class="news-title">NVIDIA Q2 earnings crush estimates: $30B revenue vs $28.7B expected</div><div class="news-meta"><span class="badge badge-success">Positive</span> · Reuters · 2h ago</div></div><div class="news-item"><div class="news-title">Jensen Huang keynote: "Blackwell is in full production"</div><div class="news-meta"><span class="badge badge-success">Positive</span> · CNBC · 1d ago</div></div><div class="news-item"><div class="news-title">US considers new China chip export restrictions for 2027</div><div class="news-meta"><span class="badge badge-danger">Negative</span> · Bloomberg · 3d ago</div></div><div class="news-item"><div class="news-title">NVIDIA partners with Japan's SoftBank for AI supercomputer</div><div class="news-meta"><span class="badge badge-success">Positive</span> · Nikkei · 5d ago</div></div></div></div></div>
+
+            <!-- RISKS TAB -->
+            <div class="company-tab-content" id="ctab-risks"><div class="card card-elevated"><div class="card-header"><h3>Investment Risks</h3><span class="badge badge-warning">4 active flags</span></div><div class="card-body"><div class="risk-flag-list"><div class="risk-flag-card high"><div class="risk-flag-header"><div class="risk-flag-indicator high"></div><strong>High Volatility</strong><span class="badge badge-danger">78/100</span></div><p class="text-sm text-secondary">30-day realized volatility is 2.3x sector median. Average daily range of ±4.2% vs sector's ±1.8%.</p><button class="btn btn-ghost btn-sm" style="color:var(--color-primary);margin-top:8px">Ask AI to Explain →</button></div><div class="risk-flag-card high"><div class="risk-flag-header"><div class="risk-flag-indicator high"></div><strong>Valuation Stretch</strong><span class="badge badge-danger">72/100</span></div><p class="text-sm text-secondary">P/E of 68x is in 92nd percentile of 5-year range. Price-to-Sales of 38x exceeds all mega-cap peers.</p><button class="btn btn-ghost btn-sm" style="color:var(--color-primary);margin-top:8px">Ask AI to Explain →</button></div><div class="risk-flag-card medium"><div class="risk-flag-header"><div class="risk-flag-indicator medium"></div><strong>Customer Concentration</strong><span class="badge badge-warning">55/100</span></div><p class="text-sm text-secondary">Top 4 customers represent ~40% of revenue. Loss of any major cloud provider contract would materially impact growth.</p><button class="btn btn-ghost btn-sm" style="color:var(--color-primary);margin-top:8px">Ask AI to Explain →</button></div><div class="risk-flag-card low"><div class="risk-flag-header"><div class="risk-flag-indicator low"></div><strong>Regulatory Risk</strong><span class="badge badge-success">32/100</span></div><p class="text-sm text-secondary">US-China export restrictions could expand. Current impact is manageable but monitoring required.</p><button class="btn btn-ghost btn-sm" style="color:var(--color-primary);margin-top:8px">Ask AI to Explain →</button></div></div></div></div></div>
           </div>
-          <div class="tracks-grid" id="tracks-grid"></div>
         </section>
+
+        <!-- ═══ LEARN VIEW ═══ -->
+        <section id="learn-view" class="view-section" role="tabpanel"><div class="academy-header"><h2>Learning Academy</h2><p>Master financial concepts through structured modules. Pass quizzes to unlock trading features.</p></div><div class="tracks-grid" id="tracks-grid"></div></section>
 
         <!-- ═══ AI PREDICTOR VIEW ═══ -->
-        <section id="predictor-view" class="view-section">
-          <div class="predictor-grid" id="predictor-area"></div>
-        </section>
+        <section id="predictor-view" class="view-section" role="tabpanel"><div class="predictor-grid" id="predictor-area"></div></section>
 
         <!-- ═══ MARKETS VIEW ═══ -->
-        <section id="markets-view" class="view-section">
-          <div class="markets-grid" id="markets-area"></div>
-        </section>
-
-        <!-- ═══ INFRA VIEW ═══ -->
-        <section id="infra-view" class="view-section">
-          <div id="infra-area"></div>
-        </section>
-
+        <section id="markets-view" class="view-section" role="tabpanel"><div class="markets-grid" id="markets-area"></div></section>
       </main>
     </div>
 
-    <!-- Mobile Bottom Nav -->
-    <div class="mobile-nav">
+    <!-- Mobile Nav -->
+    <nav class="mobile-nav" aria-label="Mobile navigation">
       <div class="mobile-nav-items">
-        <button class="mobile-nav-item active" data-tab="dashboard-view">
-          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="3" y="13" width="7" height="4" rx="1"/><rect x="13" y="3" width="4" height="14" rx="1"/></svg>
-          <span>Home</span>
-        </button>
-        <button class="mobile-nav-item" data-tab="markets-view">
-          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 17l4-4 3 3 7-7"/><path d="M14 9h3v3"/></svg>
-          <span>Markets</span>
-        </button>
-        <button class="mobile-nav-item" data-tab="learn-view">
-          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
-          <span>Learn</span>
-        </button>
-        <button class="mobile-nav-item" data-tab="predictor-view">
-          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10" cy="10" r="7"/><path d="M10 6v4l3 2"/></svg>
-          <span>AI</span>
-        </button>
+        <button class="mobile-nav-item active" data-tab="dashboard-view" aria-label="Dashboard"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="3" y="13" width="7" height="4" rx="1"/><rect x="13" y="3" width="4" height="14" rx="1"/></svg><span>Home</span></button>
+        <button class="mobile-nav-item" data-tab="company-view" aria-label="Company"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0H5m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1"/></svg><span>Company</span></button>
+        <button class="mobile-nav-item" data-tab="markets-view" aria-label="Markets"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 17l4-4 3 3 7-7"/><path d="M14 9h3v3"/></svg><span>Markets</span></button>
+        <button class="mobile-nav-item" data-tab="learn-view" aria-label="Learn"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg><span>Learn</span></button>
+        <button class="mobile-nav-item" data-tab="predictor-view" aria-label="AI"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10" cy="10" r="7"/><path d="M10 6v4l3 2"/></svg><span>AI</span></button>
       </div>
-    </div>
+    </nav>
   </div>
 
-  <!-- Toast Container -->
+  <div id="error-boundary"></div>
   <div class="toast-container" id="toast-container" role="status" aria-live="polite"></div>
 
-  <!-- Scripts: deferred for performance -->
   <script src="js/performance.js" type="module"></script>
   <script src="js/data/stocks.js"></script>
   <script src="js/data/lessons.js"></script>
