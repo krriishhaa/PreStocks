@@ -5,21 +5,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PreStocks — Learn to Invest Before You Invest</title>
   <meta name="description" content="Paper trading platform with AI-powered risk flags. Practice investing with $10k simulated cash. Learn stocks, not gamble.">
+  <meta name="theme-color" content="#1E40AF">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/performance.css">
+  <!-- Critical CSS inlined for FCP -->
+  <style>
+    body{font-family:'Inter',sans-serif;margin:0;background:#F8FAFC}
+    .landing-page{background:#fff}
+    .landing-nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border-bottom:1px solid #E2E8F0}
+  </style>
 </head>
 <body>
+  <!-- Skip Link for Keyboard Users (WCAG 2.4.1) -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <!-- Live region for dynamic announcements -->
+  <div id="a11y-live" aria-live="polite" aria-atomic="true" class="sr-only"></div>
 
   <!-- ═══════════ HOMEPAGE (Landing) ═══════════ -->
   <div id="landing-page" class="landing-page">
 
     <!-- Landing Nav -->
-    <header class="landing-nav">
+    <header class="landing-nav" role="banner">
       <div class="container flex items-center justify-between" style="height:64px">
-        <div class="header-logo">
-          <span class="logo-icon">P</span>
+        <div class="header-logo" aria-label="PreStocks Home">
+          <span class="logo-icon" aria-hidden="true">P</span>
           <span style="font-size:18px;font-weight:700;color:var(--color-primary)">PreStocks</span>
         </div>
         <nav class="landing-nav-links">
@@ -112,7 +124,7 @@
     </section>
 
     <!-- Features Section -->
-    <section id="features" class="features-section">
+    <section id="features" class="features-section lazy-section">
       <div class="container">
         <div class="section-intro">
           <h2>Everything you need to invest with confidence</h2>
@@ -166,7 +178,7 @@
     </section>
 
     <!-- How It Works -->
-    <section id="how-it-works" class="how-section">
+    <section id="how-it-works" class="how-section lazy-section">
       <div class="container">
         <div class="section-intro">
           <h2>From zero knowledge to confident investing</h2>
@@ -198,7 +210,7 @@
     </section>
 
     <!-- Testimonials -->
-    <section id="testimonials" class="testimonials-section">
+    <section id="testimonials" class="testimonials-section lazy-section">
       <div class="container">
         <div class="section-intro">
           <h2>Trusted by beginners who became confident investors</h2>
@@ -278,24 +290,24 @@
   <div id="app-page" class="app-layout" style="display:none">
 
     <!-- App Header -->
-    <header class="app-header">
-      <div class="header-logo" id="logo-btn">
-        <span class="logo-icon">P</span>
+    <header class="app-header" role="banner">
+      <div class="header-logo" id="logo-btn" role="button" tabindex="0" aria-label="Go to homepage">
+        <span class="logo-icon" aria-hidden="true">P</span>
         <span style="font-size:16px;font-weight:700;color:var(--color-primary)">PreStocks</span>
       </div>
       
-      <nav class="header-nav">
-        <button class="nav-tab active" data-tab="dashboard-view">Dashboard</button>
-        <button class="nav-tab" data-tab="learn-view">Learn</button>
-        <button class="nav-tab" data-tab="predictor-view">AI Insights</button>
-        <button class="nav-tab" data-tab="markets-view">Markets</button>
-        <button class="nav-tab" data-tab="infra-view">Data Infra</button>
+      <nav class="header-nav" role="tablist" aria-label="Main navigation">
+        <button class="nav-tab active" data-tab="dashboard-view" role="tab" aria-selected="true" aria-controls="dashboard-view">Dashboard</button>
+        <button class="nav-tab" data-tab="learn-view" role="tab" aria-selected="false" aria-controls="learn-view">Learn</button>
+        <button class="nav-tab" data-tab="predictor-view" role="tab" aria-selected="false" aria-controls="predictor-view">AI Insights</button>
+        <button class="nav-tab" data-tab="markets-view" role="tab" aria-selected="false" aria-controls="markets-view">Markets</button>
+        <button class="nav-tab" data-tab="infra-view" role="tab" aria-selected="false" aria-controls="infra-view">Data Infra</button>
       </nav>
 
       <div class="header-actions">
         <div class="search-bar" style="width:200px">
           <svg class="search-bar-icon" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="7" cy="7" r="5"/><path d="M11 11l4 4"/></svg>
-          <input class="search-bar-input" placeholder="Search stocks..." type="text">
+          <input class="search-bar-input" placeholder="Search stocks..." type="text" aria-label="Search stocks" autocomplete="off" role="searchbox">
         </div>
       </div>
 
@@ -313,10 +325,10 @@
 
     <!-- App Body -->
     <div class="app-body">
-      <main class="main-content">
+      <main class="main-content" id="main-content" role="main">
 
         <!-- ═══ DASHBOARD VIEW ═══ -->
-        <section id="dashboard-view" class="view-section active">
+        <section id="dashboard-view" class="view-section active" role="tabpanel" aria-labelledby="nav-dashboard">
           <div class="dashboard-grid">
             <div class="chart-details-container">
               <!-- Stock Header -->
@@ -429,7 +441,7 @@
                 </div>
                 <div class="trade-input-group">
                   <div class="trade-input-label">Shares</div>
-                  <input type="number" class="trade-input" id="trade-shares" placeholder="0" min="0.01" step="0.01">
+                  <input type="number" class="trade-input" id="trade-shares" placeholder="0" min="0.01" step="0.01" aria-label="Number of shares to trade">
                 </div>
                 <div class="trade-summary">
                   <div class="trade-summary-row">
@@ -551,8 +563,10 @@
   </div>
 
   <!-- Toast Container -->
-  <div class="toast-container" id="toast-container"></div>
+  <div class="toast-container" id="toast-container" role="status" aria-live="polite"></div>
 
+  <!-- Scripts: deferred for performance -->
+  <script src="js/performance.js" type="module"></script>
   <script src="js/data/stocks.js"></script>
   <script src="js/data/lessons.js"></script>
   <script src="js/components/charts.js"></script>
