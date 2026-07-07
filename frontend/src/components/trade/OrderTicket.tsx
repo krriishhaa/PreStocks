@@ -122,7 +122,7 @@ export function OrderTicket({ symbol, name, price, onSuccess }: OrderTicketProps
         </Button>
 
         <p className="text-[11px] text-[#9CA3AF] text-center">
-          Cash available: {formatCurrency(portfolio.cashBalance)}
+          Cash available: {formatCurrency(portfolio?.cash ?? 0)}
         </p>
       </form>
     </div>

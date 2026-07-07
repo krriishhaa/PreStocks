@@ -1,36 +1,48 @@
 export interface Holding {
+  id: number;
   symbol: string;
-  name: string;
+  company_name: string | null;
   shares: number;
-  avgCost: number;
-  currentPrice: number;
-  totalValue: number;
-  totalReturn: number;
-  totalReturnPercent: number;
-  dayChange: number;
-  dayChangePercent: number;
+  avg_buy_price: number;
+  current_price: number | null;
+  market_value: number;
+  unrealized_pnl: number;
+  unrealized_pnl_pct: number;
 }
 
-export interface Transaction {
-  id: string;
+export interface Trade {
+  id: number;
   symbol: string;
-  action: "buy" | "sell";
+  company_name: string | null;
+  side: "buy" | "sell";
+  order_type: string;
   shares: number;
   price: number;
-  total: number;
-  timestamp: string;
-  status: "filled" | "pending" | "cancelled";
+  total_amount: number;
+  status: string;
+  executed_at: string;
 }
 
-export interface Portfolio {
-  totalValue: number;
-  cashBalance: number;
-  dayChange: number;
-  dayChangePercent: number;
-  totalReturn: number;
-  totalReturnPercent: number;
+export interface PortfolioSummary {
+  total_value: number;
+  cash: number;
+  invested: number;
+  pnl: number;
+  pnl_pct: number;
+  positions: number;
+  initial_capital: number;
+}
+
+export interface PortfolioFull {
+  id: number;
+  name: string;
+  cash: number;
+  initial_capital: number;
+  total_value: number;
+  total_invested: number;
+  unrealized_pnl: number;
+  positions: number;
   holdings: Holding[];
-  transactions: Transaction[];
 }
 
 export interface PortfolioChartPoint {

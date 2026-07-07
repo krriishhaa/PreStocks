@@ -52,11 +52,11 @@ export default function PortfolioPage() {
   const [sortCol, setSortCol] = useState<string>("value");
   const [sortDir, setSortDir] = useState<"asc" | "desc">("desc");
 
-  const cashBalance = portfolio.cashBalance || 600.50;
-  const totalValue = mockHoldings.reduce((s, h) => s + h.value, 0) + cashBalance;
-  const dayPL = 42.18;
-  const holdingsCount = mockHoldings.length;
-  const sectorCount = new Set(mockHoldings.map((h) => h.sector)).size;
+  const cashBalance = portfolio?.cash ?? 0;
+  const totalValue = portfolio?.total_value ?? 0;
+  const dayPL = portfolio?.unrealized_pnl ?? 0;
+  const holdingsCount = portfolio?.positions ?? 0;
+  const sectorCount = 0;
   const cashPercent = (cashBalance / totalValue) * 100;
 
   const aggregateRisk = 62;

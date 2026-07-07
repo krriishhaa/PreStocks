@@ -34,19 +34,20 @@ export default function TradePage() {
   const shares = inputMode === "shares" ? Number(quantity) || 0 : Math.floor((Number(quantity) || 0) / price);
   const total = shares * price;
 
-  const holdingsValue = portfolio.holdings.reduce((s, h) => s + h.totalValue, 0);
-  const newPortfolioValue = portfolio.totalValue + (action === "buy" ? 0 : total) - (action === "buy" ? total : 0);
+  const holdingsValue = portfolio?.total_invested ?? 0;
+  const totalPortfolioValue = portfolio?.total_value ?? 0;
+  const newPortfolioValue = totalPortfolioValue + (action === "buy" ? 0 : total) - (action === "buy" ? total : 0);
   const positionPercent = newPortfolioValue > 0 ? (total / newPortfolioValue) * 100 : 0;
   const isLargePosition = positionPercent > 25;
 
-  const existingHolding = portfolio.holdings.find((h) => h.symbol === symbol);
-  const existingSectorPercent = 45; // mock
+  const existingHolding = (portfolio?.holdings ?? []).find((h) => h.symbol === symbol.toUpperCase());
+  const existingSectorPercent = 0;
 
   const handleReview = () => {
     setError("");
     if (!symbol) { setError("Enter a ticker symbol"); return; }
     if (shares <= 0) { setError("Enter a valid quantity"); return; }
-    if (action === "buy" && total > portfolio.cashBalance) { setError("Insufficient buying power"); return; }
+    if (action === "buy" && total > (portfolio?.cash ?? 0)) { setError("Insufficient buying power"); return; }
     if (action === "sell" && (!existingHolding || existingHolding.shares < shares)) { setError("Insufficient shares to sell"); return; }
     if (hasHighRisk && !riskAcknowledged) { setError("Please acknowledge the risk warning"); return; }
     setShowReview(true);

@@ -1,7 +1,7 @@
 export type { User } from './user';
 export type { Stock, PricePoint } from './stock';
 export type { RiskFlag, CompositeRiskScore } from './flags';
-export type { Portfolio, Holding, Transaction, PortfolioChartPoint } from './portfolio';
+export type { Holding, Trade, PortfolioFull, PortfolioSummary } from './portfolio';
 
 export interface AuthResponse {
   access_token: string;
